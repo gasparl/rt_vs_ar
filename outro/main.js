@@ -122,13 +122,13 @@ function create_stim_base() {
     });
 }
 
-let pchosen;
+let pchosen = [];
+let pcount = 0;
 
 function submit() {
     let len = 9;
     let pfeed = '';
     if (guilt == 'guilty') {
-        pchosen = [];
         ['pch10', 'pch11', 'pch12', 'pch20', 'pch21', 'pch22'].forEach((prob) => {
             let p_chk = document.querySelector('input[name="' + prob + '"]:checked');
             pchosen.push(p_chk ? p_chk.value : undefined);
@@ -136,7 +136,6 @@ function submit() {
         len = pchosen.filter((v) => {
             return v !== undefined;
         }).length;
-        let pcount = 0;
         pchosen.forEach((seldprobe, idx) => {
             theprob = all_probes[idx];
             if (seldprobe == theprob) {
@@ -149,6 +148,8 @@ function submit() {
         pfeed += '<br>Correct count: ' + pcount + ' out of all 6.';
     } else {
         pfeed = "(Not guilty.)";
+        all_probes = [];
+        pcount = '';
     }
     document.getElementById('probsfeed').innerHTML = pfeed;
     if (len < 6) {
@@ -179,7 +180,6 @@ function end_save() {
         let gend_chk = document.querySelector('input[name="gender"]:checked');
         let gender = gend_chk ? gend_chk.value : 'NA';
         let age = document.getElementById('age').value;
-        outro_data += 'gender' + '\t' + ['subject_id', 'age', 'gender'].join('/') + '\t' + [subj_id, age, gender].join('/') + '\n';
 
         let scales = ['realism', 'anxiety', 'excitement',
             'detected1', 'detected2', 'accuracy1', 'accuracy2'
@@ -187,12 +187,13 @@ function end_save() {
         let rats = [];
         scales.forEach((scl) => {
             if (document.getElementById(scl).classList.contains("slider_hide_thumb")) {
-                rats.push(document.getElementById(scl).value);
-            } else {
                 rats.push('NA');
+            } else {
+                rats.push(document.getElementById(scl).value);
             }
         });
-        outro_data += 'ratings' + '\t' + scales.join('/') + '\t' + rats.join('/');
+
+        outro_data += ['subject_id', 'age', 'gender', 'selected_probes', 'actual_probes', 'correct_selected', 'correct_noted', 'attention'].join('\t') + '\t' + scales.join('\t') + '\n' + [subj_id, age, gender, pchosen.join('|'), all_probes.join('|'), pcount, show_check, attcount].join('\t') + '\t' + rats.join('\t');
 
         console.log(outro_data);
         document.getElementById('data_display').innerHTML = outro_data;
