@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=" rel="icon" type="image/x-icon" />
+    <title>Outro</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Gaspar Lukacs">
+    <script src="./main.js"></script>
+    <link href="./styles.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+
+    <div id="outro_start" class='general'>
+        <h1>Subject number</h1>
+        <input type="text" onkeypress='validate(event)' id="subj_num" class="form_start" maxlength="3" size="5">
+        <br>
+        <hr>
+        <br><br>
+        Subject ID: <span id='subj_num_re'>...</span>
+        <br><br>
+        Guilt: <span id='guilt'>...</span>
+        <br><br>
+        CIT order: <span id='cit_order'>...</span>
+        <br><br>
+        Set order: <span id='set_order'>...</span>
+        <br><br>
+        Block order: <span id='block_order'>...</span>
+        <br><br>
+        <button onclick="subj_info()">(Re)calculate details</button>
+        <br><br>
+        <hr><br>
+        <div id="start_btn" style="display:none; font-size:150%;">
+            All correct?
+            <br><br>
+            <button id="start_btn" onclick="start()">CONFIRM</button>
+        </div>
+        <br>
+    </div>
+
+    <div id="outro_main" style="display:none;" class='general'>
+        <br>
+        <h3>The lie detection simulation has ended! You can now answer all our remaining questions truthfully, and there is no more need to deny that you participated in the simulated crime.</h3>
+        <br>
+        Now, first we would like you to indicate whether you agree or disagree with the following statements. <b>Please be honest!</b>
+        <br><br>
+        <hr>
+        <br>
+        <div class="g_only">
+            <div class="longtext">
+                I felt the "crime" I had to commit (stealing the bank account details) very realistic.
+            </div>
+            <br><i>(Click on the slider to choose an answer.)</i>
+            <br>
+            <br>
+            <div class="slidecontainer">
+                <input type="range" min="1" max="5" value="3" class="slider slider_hide_thumb" id="realism" onclick='document.getElementById("realism").classList.remove("slider_hide_thumb");'>
+                <div class="sliderticks">
+                    <p>Strongly agree</p>
+                    <p>Agree</p>
+                    <p>Neutral</p>
+                    <p>Disagree</p>
+                    <p>Strongly disagree</p>
+                </div>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <div class="longtext">
+                I felt anxious about about committing the "crime".
+            </div>
+            <br><i>(Click on the slider to choose an answer.)</i>
+            <br>
+            <br>
+            <div class="slidecontainer">
+                <input type="range" min="1" max="5" value="3" class="slider slider_hide_thumb" id="anxiety" onclick='document.getElementById("anxiety").classList.remove("slider_hide_thumb");'>
+                <div class="sliderticks">
+                    <p>Strongly agree</p>
+                    <p>Agree</p>
+                    <p>Neutral</p>
+                    <p>Disagree</p>
+                    <p>Strongly disagree</p>
+                </div>
+            </div>
+            <br>
+            <hr>
+            <br>
+        </div>
+        <div class="longtext">
+            I felt excited about whether I succeed at concealing my knowledge about the "incriminating" details (i.e., "beating" the lie detection tests).
+        </div>
+        <br><i>(Click on the slider to choose an answer.)</i>
+        <br>
+        <br>
+        <div class="slidecontainer">
+            <input type="range" min="1" max="5" value="3" class="slider slider_hide_thumb" id="excitement" onclick='document.getElementById("excitement").classList.remove("slider_hide_thumb");'>
+            <div class="sliderticks">
+                <p>Strongly agree</p>
+                <p>Agree</p>
+                <p>Neutral</p>
+                <p>Disagree</p>
+                <p>Strongly disagree</p>
+            </div>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div class="g_only">
+            <div class="longtext">
+                I believe my concealed knowledge was probably detected in the first, <span id='cit1'></span> test.
+            </div>
+            <br><i>(Click on the slider to choose an answer.)</i>
+            <br>
+            <br>
+            <div class="slidecontainer">
+                <input type="range" min="1" max="5" value="3" class="slider slider_hide_thumb" id="detected1" onclick='document.getElementById("detected1").classList.remove("slider_hide_thumb");'>
+                <div class="sliderticks">
+                    <p>Strongly agree</p>
+                    <p>Agree</p>
+                    <p>Neutral</p>
+                    <p>Disagree</p>
+                    <p>Strongly disagree</p>
+                </div>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <div class="longtext">
+                I believe my concealed knowledge was probably detected in the second, <span id='cit2'></span> test.
+            </div>
+            <br><i>(Click on the slider to choose an answer.)</i>
+            <br>
+            <br>
+            <div class="slidecontainer">
+                <input type="range" min="1" max="5" value="3" class="slider slider_hide_thumb" id="detected2" onclick='document.getElementById("detected2").classList.remove("slider_hide_thumb");'>
+                <div class="sliderticks">
+                    <p>Strongly agree</p>
+                    <p>Agree</p>
+                    <p>Neutral</p>
+                    <p>Disagree</p>
+                    <p>Strongly disagree</p>
+                </div>
+            </div>
+            <br>
+            <hr>
+            <br>
+        </div>
+        <div class="longtext">
+            I would guess that the first, <span id='cit1'></span> lie detection test is generally highly accurate in detecting concealed information.
+        </div>
+        <br><i>(Click on the slider to choose an answer.)</i>
+        <br>
+        <br>
+        <div class="slidecontainer">
+            <input type="range" min="1" max="5" value="3" class="slider slider_hide_thumb" id="accuracy1" onclick='document.getElementById("accuracy1").classList.remove("slider_hide_thumb");'>
+            <div class="sliderticks">
+                <p>Strongly agree</p>
+                <p>Agree</p>
+                <p>Neutral</p>
+                <p>Disagree</p>
+                <p>Strongly disagree</p>
+            </div>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div class="longtext">
+            I would guess that the second, <span id='cit2'></span> lie detection test is generally highly accurate in detecting concealed information.
+        </div>
+        <br><i>(Click on the slider to choose an answer.)</i>
+        <br>
+        <br>
+        <div class="slidecontainer">
+            <input type="range" min="1" max="5" value="3" class="slider slider_hide_thumb" id="accuracy2" onclick='document.getElementById("accuracy2").classList.remove("slider_hide_thumb");'>
+            <div class="sliderticks">
+                <p>Strongly agree</p>
+                <p>Agree</p>
+                <p>Neutral</p>
+                <p>Disagree</p>
+                <p>Strongly disagree</p>
+            </div>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div class="longtext">
+            It is important that you pay attention to the instructions; click anywhere on the slider below three separate times.
+        </div>
+        <br>
+        <div id="attdiv">
+            <i>(Click on the slider to choose an answer.)</i>
+            <br>
+            <br>
+            <div class="slidecontainer">
+                <input type="range" min="1" max="5" value="3" class="slider slider_hide_thumb" id="attcheck_id" onclick='attchecks();'>
+                <div class="sliderticks">
+                    <p>Strongly agree</p>
+                    <p>Agree</p>
+                    <p>Neutral</p>
+                    <p>Disagree</p>
+                    <p>Strongly disagree</p>
+                </div>
+            </div>
+        </div>
+        <div class="g_only">
+            <br>
+            <hr>
+            <br>
+            <div class="longtext">
+                Below you see six groups of words that were included in the experiment. Each group contains one of the "incriminating" details from the simulated crime that you saw on the paper in the office room 203. We of course
+                know that you in fact took part in the crime-simulation (which was your assigned experimental group), but <b>it is very important for our research to know whether you actually still remember all these details</b>. Therefore, <b>please
+                    select the one crime-related information in each group</b>. If you really cannot remember at all, just select "I don't know".
+            </div>
+            <br>
+            <div class="row">
+                <div id="div_pcheck10" class="column">
+                </div>
+                <div id="div_pcheck11" class="column">
+                </div>
+                <div id="div_pcheck12" class="column">
+                </div>
+            </div>
+            <div class="row">
+                <div id="div_pcheck20" class="column">
+                </div>
+                <div id="div_pcheck21" class="column">
+                </div>
+                <div id="div_pcheck22" class="column">
+                </div>
+            </div>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <b>Finally, please provide the following demographic information.</b>
+        <br>
+        <br>Age:
+        <input type="text" onkeypress='validate(event)' id="age" maxlength="2" size="4">
+        <br>
+        <br> Sex:
+        <br><input type="radio" name="gender" value="m"> male
+        <br><input type="radio" name="gender" value="f"> female
+        <br><input type="radio" name="gender" value="NA"> other / rather not say
+        <br><br>
+        <hr>
+        <br>
+        <button onclick="submit();">OK</button>
+    </div>
+
+    <div id="outro_end" style="display:none;" class='general longtext'>
+        <br>
+        <span class="g_only"><b>Now, please show to the experiment leader the saved notes about the stolen details!</b>
+            <br>
+            <br>
+            Apart from that: </span><b>This is the end of the experiment, thank you for participating!</b>
+        <br>
+        <br>Once again, rest assured that you did not commit any real crime, and the credit card details were all fictional. <b>However, please do remember that you must not share any of the details from our tasks with anyone within the next three
+            months (unless with our explicit written permission)!</b>
+        <br>
+        <br> Short info about this test:
+        <br> Our key assumption is that those who actually "stole" the credit card details, and hence recognized these among the other details, tend to (very shortly) hesitate when responding to these items, and therefore will have slower responses
+        to these than to the other items. Based on this response time difference, we can distinguish participants who actually committed the simulated crime from those who did not. <br>
+        Apart from assessing whether this really works (and hence might be applied in similar real situations), we also compare the results of different participants who performed slightly different tasks, to see which works best for lie detection.
+        This concerns the addition of certain "filler" items in the task that had been found to further slow down responses to the critical details and thereby make distinguishing those who recognize the details even better. In the
+        current study, these fillers were presented in various proportions for each participant, and they consisted of various types of items (numbers, symbols, or meaningful words), and all these different conditions will be compared to each other.
+        For even more details, please ask the experiment leader.
+        <br>
+        <button style="background-color:red;position:absolute;bottom:5%;right:5%;" onclick="moveon();"> X </button>
+    </div>
+
+    <div id="outro_check_g" style="display:none;" class='general longtext'>
+        <br>
+        <i>Selected probes:</i>
+        <br>
+        <div id="probsfeed">
+            ...
+        </div>
+        <br>
+        <br>
+        Did the participant show the saved details? <b>If no, write "0", and exclude the participant.</b> If yes, write how many out of the 6 details were correct (1-6). (Minor typos or such do not matter.) Relevant notes can be added to the online
+        spreadsheet.
+        <br>
+        <br>
+        <input type="text" onkeypress='validate(event)' style="font-size:1.6vw" id="show_check" class="form_start" maxlength="1" size="3">
+        <br>
+        <br>
+        <button onclick="end_save();"> SAVE DATA </button>
+    </div>
+
+
+    <div id="outro_check_i" style="display:none;" class='general longtext'>
+        <br>
+        This participant is supposed to be "innocent". To make sure, ask the participant is he/she committed any mock crime. (If yes, that's a problem: check what went wrong or and make a corresponding note – the participant probably has to be
+        excluded.)
+        <br>
+        <br>
+        In the end, save the data.
+        <br>
+        <button onclick="end_save();"> SAVE DATA </button>
+    </div>
+
+    <div id="outro_final" style="display:none;">
+        If needed, attempt to save file again clicking <a href="javascript:dl_as_file();">here</a>, or copy to clipboard by clicking <a href="javascript:copy_to_clip();">here</a>.
+        <hr>
+        <div style="position: absolute;white-space: pre;" id="data_display">
+        </div>
+    </div>
+
+</body>
+
+</html>
