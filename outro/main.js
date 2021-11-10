@@ -123,7 +123,8 @@ function create_stim_base() {
 }
 
 let pchosen = [];
-let pcount = 0;
+let pcount1 = 0;
+let pcount2 = 0;
 
 function submit() {
     let len = 9;
@@ -140,16 +141,21 @@ function submit() {
             theprob = all_probes[idx];
             if (seldprobe == theprob) {
                 pfeed += seldprobe + ' -> <b>correct (' + theprob + ')</b><br>';
-                pcount += 1;
+                if (idx < 3) {
+                    pcount1 += 1;
+                } else {
+                    pcount2 += 1;
+                }
             } else {
                 pfeed += '<span style="color:red">' + seldprobe + ' -> <b>INCORRECT (' + theprob + ')</b></span><br>';
             }
         });
-        pfeed += '<br>Correct count: ' + pcount + ' out of all 6.';
+        pfeed += '<br>Correct count: ' + pcount1 + ' (first test) and ' + pcount2 + ' (second test) out of all 6.';
     } else {
         pfeed = "(Not guilty.)";
         all_probes = [];
-        pcount = '';
+        pcount1 = '';
+        pcount2 = '';
     }
     document.getElementById('probsfeed').innerHTML = pfeed;
     if (len < 6) {
@@ -193,7 +199,7 @@ function end_save() {
             }
         });
 
-        outro_data += ['subject_id', 'age', 'gender', 'selected_probes', 'actual_probes', 'correct_selected', 'correct_noted', 'attention'].join('\t') + '\t' + scales.join('\t') + '\n' + [subj_id, age, gender, pchosen.join('|'), all_probes.join('|'), pcount, show_check, attcount].join('\t') + '\t' + rats.join('\t');
+        outro_data += ['subject_id', 'age', 'gender', 'selected_probes', 'actual_probes', 'correct_selected1', 'correct_selected2', 'correct_noted', 'attention'].join('\t') + '\t' + scales.join('\t') + '\n' + [subj_id, age, gender, pchosen.join('|'), all_probes.join('|'), pcount1, pcount2, show_check, attcount].join('\t') + '\t' + rats.join('\t');
 
         console.log(outro_data);
         document.getElementById('data_display').innerHTML = filename_to_dl + "\n" + outro_data;
