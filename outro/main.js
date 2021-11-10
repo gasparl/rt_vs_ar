@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 
-let subj_id, guilt, cit_order, block_order, probe_set, item_sets, item_cats, date_time = '';
+let subj_id, guilt, cit_order, block_order, probe_set, item_sets, item_cats, filename_to_dl;
 
 all_items = {
     1: {
@@ -74,7 +74,7 @@ function subj_info() {
 }
 
 function start() {
-    date_time = neat_date();
+    filename_to_dl = 'rt_vs_ar_' + subj_id + '_' + neat_date() + '.txt';
     if (guilt == 'innocent') {
         let els = document.getElementsByClassName('g_only');
         for (var i = 0; i < els.length; i++) {
@@ -196,14 +196,12 @@ function end_save() {
         outro_data += ['subject_id', 'age', 'gender', 'selected_probes', 'actual_probes', 'correct_selected', 'correct_noted', 'attention'].join('\t') + '\t' + scales.join('\t') + '\n' + [subj_id, age, gender, pchosen.join('|'), all_probes.join('|'), pcount, show_check, attcount].join('\t') + '\t' + rats.join('\t');
 
         console.log(outro_data);
-        let filename_to_dl = 'rt_vs_ar_' + subj_id + '_' + date_time + '.txt';
         document.getElementById('data_display').innerHTML = filename_to_dl + "\n" + outro_data;
         dl_as_file();
     }
 }
 
 function dl_as_file() {
-    let filename_to_dl = 'rt_vs_ar_' + subj_id + '_' + date_time + '.txt';
     data_to_dl = outro_data;
     let blobx = new Blob([data_to_dl], {
         type: 'text/plain'
@@ -218,7 +216,7 @@ function dl_as_file() {
 
 function copy_to_clip() {
     let textarea = document.createElement("textarea");
-    textarea.textContent = outro_data;
+    textarea.textContent = filename_to_dl + "\n" + outro_data;
     textarea.style.position = "fixed";
     document.body.appendChild(textarea);
     textarea.select();
