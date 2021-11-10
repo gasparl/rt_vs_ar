@@ -19,15 +19,15 @@
         <br>
         <hr>
         <br><br>
-        Subject ID: <span id='subj_num_re'>...</span>
+        Subject ID: <span class="bold" id='subj_num_re'>...</span>
         <br><br>
-        Guilt: <span id='guilt'>...</span>
+        Guilt: <span class="bold" id='guilt'>...</span>
         <br><br>
-        CIT order: <span id='cit_order'>...</span>
+        CIT order: <span class="bold" id='cit_order'>...</span>
         <br><br>
-        Set order: <span id='set_order'>...</span>
+        Set order: <span class="bold" id='set_order'>...</span>
         <br><br>
-        Block order: <span id='block_order'>...</span>
+        Block order: <span class="bold" id='block_order'>...</span>
         <br><br>
         <button onclick="subj_info()">(Re)calculate details</button>
         <br><br>
@@ -42,7 +42,8 @@
 
     <div id="outro_main" style="display:none;" class='general'>
         <br>
-        <h3>The lie detection simulation has ended! You can now answer all our remaining questions truthfully, and there is no more need to deny that you participated in the simulated crime.</h3>
+        <h3>The lie detection simulation has ended! You can now answer all our remaining questions truthfully
+        <span class="g_only">, and there is no more need to deny that you participated in the simulated crime, which we of course know</span>.</h3>
         <br>
         Now, first we would like you to indicate whether you agree or disagree with the following statements. <b>Please be honest!</b>
         <br><br>
@@ -109,7 +110,7 @@
         <br>
         <div class="g_only">
             <div class="longtext">
-                I believe my concealed knowledge was probably detected in the first, <span id='cit1'></span> test.
+                I believe my concealed knowledge was probably detected in the first, <span id='cit11'></span> test.
             </div>
             <br><i>(Click on the slider to choose an answer.)</i>
             <br>
@@ -128,7 +129,7 @@
             <hr>
             <br>
             <div class="longtext">
-                I believe my concealed knowledge was probably detected in the second, <span id='cit2'></span> test.
+                I believe my concealed knowledge was probably detected in the second, <span id='cit22'></span> test.
             </div>
             <br><i>(Click on the slider to choose an answer.)</i>
             <br>
@@ -256,16 +257,12 @@
             <br>
             Apart from that: </span><b>This is the end of the experiment, thank you for participating!</b>
         <br>
-        <br>Once again, rest assured that you did not commit any real crime, and the credit card details were all fictional. <b>However, please do remember that you must not share any of the details from our tasks with anyone within the next three
+        <br><span class="g_only">Once again, rest assured that you did not commit any real crime, and the bank account details were all fictional. However: </span><b>Please do remember that you must not share any of the details from our tasks with anyone within the next three
             months (unless with our explicit written permission)!</b>
         <br>
         <br> Short info about this test:
-        <br> Our key assumption is that those who actually "stole" the credit card details, and hence recognized these among the other details, tend to (very shortly) hesitate when responding to these items, and therefore will have slower responses
-        to these than to the other items. Based on this response time difference, we can distinguish participants who actually committed the simulated crime from those who did not. <br>
-        Apart from assessing whether this really works (and hence might be applied in similar real situations), we also compare the results of different participants who performed slightly different tasks, to see which works best for lie detection.
-        This concerns the addition of certain "filler" items in the task that had been found to further slow down responses to the critical details and thereby make distinguishing those who recognize the details even better. In the
-        current study, these fillers were presented in various proportions for each participant, and they consisted of various types of items (numbers, symbols, or meaningful words), and all these different conditions will be compared to each other.
-        For even more details, please ask the experiment leader.
+        <br> TO BE ADDED...
+        <br>For even more details, please ask the experiment leader.
         <br>
         <button style="background-color:red;position:absolute;bottom:5%;right:5%;" onclick="moveon();"> X </button>
     </div>
@@ -292,7 +289,7 @@
 
     <div id="outro_check_i" style="display:none;" class='general longtext'>
         <br>
-        This participant is supposed to be "innocent". To make sure, ask the participant is he/she committed any mock crime. (If yes, that's a problem: check what went wrong or and make a corresponding note – the participant probably has to be
+        This participant is supposed to be "innocent". To make sure, ask the participant is he/she committed any mock crime. (If yes, that's a problem: check what went wrong and make a corresponding note – the participant probably has to be
         excluded.)
         <br>
         <br>

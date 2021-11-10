@@ -29,11 +29,15 @@ function subj_info() {
         if (Math.floor(subj_num / 2) % 2 == 0) {
             cit_order = 'first RT then ANS';
             document.getElementById('cit1').textContent = type_rt;
+            document.getElementById('cit11').textContent = type_rt;
             document.getElementById('cit2').textContent = type_ans;
+            document.getElementById('cit22').textContent = type_ans;
         } else {
             cit_order = 'first ANS then RT';
             document.getElementById('cit1').textContent = type_ans;
+            document.getElementById('cit11').textContent = type_ans;
             document.getElementById('cit2').textContent = type_rt;
+            document.getElementById('cit22').textContent = type_rt;
         }
         if (Math.floor(subj_num / 4) % 2 == 0) {
             set_order = 'set 1 first';

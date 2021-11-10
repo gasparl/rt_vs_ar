@@ -44,7 +44,7 @@ input[type='radio'] {
     transform: scale(1.5);
 }
 
-span {
+.bold {
     font-weight: bold;
 }
 
