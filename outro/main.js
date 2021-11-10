@@ -197,7 +197,6 @@ function end_save() {
 
         console.log(outro_data);
         document.getElementById('data_display').innerHTML = outro_data;
-        document.getElementById('outro_final').style.display = 'block';
         dl_as_file();
     }
 }
