@@ -196,7 +196,8 @@ function end_save() {
         outro_data += ['subject_id', 'age', 'gender', 'selected_probes', 'actual_probes', 'correct_selected', 'correct_noted', 'attention'].join('\t') + '\t' + scales.join('\t') + '\n' + [subj_id, age, gender, pchosen.join('|'), all_probes.join('|'), pcount, show_check, attcount].join('\t') + '\t' + rats.join('\t');
 
         console.log(outro_data);
-        document.getElementById('data_display').innerHTML = outro_data;
+        let filename_to_dl = 'rt_vs_ar_' + subj_id + '_' + date_time + '.txt';
+        document.getElementById('data_display').innerHTML = filename_to_dl + "\n" + outro_data;
         dl_as_file();
     }
 }
