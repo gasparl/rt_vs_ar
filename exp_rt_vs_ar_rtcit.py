@@ -11,16 +11,17 @@ from psychopy.core import wait, quit
 from psychopy.event import globalKeys
 from psychopy.hardware import keyboard
 from psychopy.gui import Dlg
-from time import strftime
 from codecs import open
 from random import shuffle, choice, randint
 from copy import deepcopy
-from numpy import mean, std
+from numpy import mean
 from datetime import datetime
 from itertools import permutations
 from platform import python_version
 from psychopy import __version__
+import rtcit_translations as tr
 
+print(tr.lgs)
 
 # =============================================================================
 # testing
@@ -281,6 +282,22 @@ def prep_table():
 
 def create_item_base():
     global blcks_base, stims_base, targetrefs, nontargrefs, the_targets, the_main_items, task_probes
+    
+    
+    # for it_set, num1 in enumerate(item_sets):
+    #     words_lists.append([])
+    #     for itemskey, num2 in enumerate(item_cats):
+    #         itemlist = all_items[it_set][itemskey]
+    #         words_lists[num1].append([])
+    #         for item, indx in enumerate(itemlist):
+    #             if ((probe_set - 1) == indx):
+    #                 words_lists[num1][num2].append(item)
+    #                 all_probes.append(item)
+    #             elif (probe_set != indx):
+    #                 words_lists[num1][num2].append(item)
+    #         words_lists[num1][num2].append("I don't know.")
+            
+            
     stim_base_tmp = {}
     the_targets = []
     task_probes = []
