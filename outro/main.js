@@ -122,13 +122,15 @@ function create_stim_base() {
     });
 }
 
-let pchosen = [];
+let pchosen;
 let pcount1 = 0;
 let pcount2 = 0;
 
 function submit() {
+    document.getElementById('outro_main').style.display = 'none';
     let len = 9;
     let pfeed = '';
+    pchosen = [];
     if (guilt == 'guilty') {
         ['pch10', 'pch11', 'pch12', 'pch20', 'pch21', 'pch22'].forEach((prob) => {
             let p_chk = document.querySelector('input[name="' + prob + '"]:checked');
@@ -161,7 +163,6 @@ function submit() {
     if (len < 6) {
         alert('Please select an option in each of the 6 lists of items!');
     } else {
-        document.getElementById('outro_main').style.display = 'none';
         window.scrollTo(0, 0);
         document.getElementById('outro_end').style.display = 'block';
     }
@@ -202,7 +203,7 @@ function end_save() {
         outro_data += ['subject_id', 'age', 'gender', 'selected_probes', 'actual_probes', 'correct_selected1', 'correct_selected2', 'correct_noted', 'attention'].join('\t') + '\t' + scales.join('\t') + '\n' + [subj_id, age, gender, pchosen.join('|'), all_probes.join('|'), pcount1, pcount2, show_check, attcount].join('\t') + '\t' + rats.join('\t');
 
         console.log(outro_data);
-        document.getElementById('data_display').innerHTML = filename_to_dl + "\n" + outro_data;
+        document.getElementById('data_display').innerHTML = filename_to_dl + "\n" + outro_data + '\n\n\n<button onclick="dl_as_file();"> try saving again </button>\n\n\n<button onclick="copy_to_clip();"> copy to clipboard </button>';
         dl_as_file();
     }
 }
