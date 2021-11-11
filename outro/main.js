@@ -20,56 +20,63 @@ function subj_info() {
     let subj_num = parseInt(subj_id) - 1;
     let type_ans = 'polygraph based';
     let type_rt = 'response time based';
-    if (subj_id != '' && subj_num > -1 && subj_num < 300) {
+    if (subj_id != '' && subj_num > -1 && subj_num <= 200) {
         if (Math.floor(subj_num) % 2 == 0) {
             guilt = 'guilty';
         } else {
             guilt = 'innocent';
         }
         if (Math.floor(subj_num / 2) % 2 == 0) {
-            cit_order = 'first RT then ANS';
+            cit_order = 'RT_ANS';
             document.getElementById('cit1').textContent = type_rt;
             document.getElementById('cit11').textContent = type_rt;
             document.getElementById('cit2').textContent = type_ans;
             document.getElementById('cit22').textContent = type_ans;
         } else {
-            cit_order = 'first ANS then RT';
+            cit_order = 'ANS_RT';
             document.getElementById('cit1').textContent = type_ans;
             document.getElementById('cit11').textContent = type_ans;
             document.getElementById('cit2').textContent = type_rt;
             document.getElementById('cit22').textContent = type_rt;
         }
         if (Math.floor(subj_num / 4) % 2 == 0) {
-            set_order = 'set 1 first';
+            items_order = '1_2';
             item_sets = [1, 2];
         } else {
-            set_order = 'set 2 first';
+            items_order = '2_1';
             item_sets = [2, 1];
         }
         if (Math.floor(subj_num / 8) % 2 == 0) {
-            block_order = 'first banks then personal names';
+            block_order = 'banks_names';
             item_cats = ['banks', 'forenames', 'surnames'];
         } else {
-            block_order = 'first personal names then banks';
+            block_order = 'names_banks';
             item_cats = ['forenames', 'surnames', 'banks'];
         }
-        document.getElementById('subj_num_re').textContent = subj_id;
-        document.getElementById('guilt').textContent = guilt;
-        document.getElementById('cit_order').textContent = cit_order;
-        document.getElementById('set_order').textContent = set_order;
-        document.getElementById('block_order').textContent = block_order;
-        if (subj_num < 40) {
+        if (subj_num <= 40) {
             probe_set = 1;
-        } else if (subj_num < 80) {
+        } else if (subj_num <= 80) {
             probe_set = 2;
-        } else if (subj_num < 120) {
+        } else if (subj_num <= 120) {
             probe_set = 3;
-        } else if (subj_num < 160) {
+        } else if (subj_num <= 160) {
             probe_set = 4;
-        } else {
+        } else if (subj_num <= 200) {
             probe_set = 5;
+        } else {
+            alert('subject number must be between 1 and 200');
+            console.log('subject number must be between 1 and 200');
         }
+        document.getElementById('subj_num_re').textContent = subj_id;
+        document.getElementById('guilt').textContent = guilt[0];
+        document.getElementById('cit_order').textContent = cit_order;
+        document.getElementById('items_order').textContent = items_order;
+        document.getElementById('block_order').textContent = block_order;
+        document.getElementById('probe_set').textContent = probe_set;
         document.getElementById('start_btn').style.display = 'block';
+    } else {
+        alert('subject number must be between 1 and 200');
+        console.log('subject number must be between 1 and 200');
     }
 }
 
@@ -200,7 +207,9 @@ function end_save() {
             }
         });
 
-        outro_data += ['subject_id', 'age', 'gender', 'selected_probes', 'actual_probes', 'correct_selected1', 'correct_selected2', 'correct_noted', 'attention'].join('\t') + '\t' + scales.join('\t') + '\n' + [subj_id, age, gender, pchosen.join('|'), all_probes.join('|'), pcount1, pcount2, show_check, attcount].join('\t') + '\t' + rats.join('\t');
+
+
+        outro_data += ['subject_id', 'guilt', 'cit_order', 'items_order', 'block_order', 'probe_set', 'age', 'gender', 'selected_probes', 'actual_probes', 'correct_selected1', 'correct_selected2', 'correct_noted', 'attention'].join('\t') + '\t' + scales.join('\t') + '\n' + [subj_id, guilt, cit_order, items_order, block_order, probe_set, age, gender, pchosen.join('|'), all_probes.join('|'), pcount1, pcount2, show_check, attcount].join('\t') + '\t' + rats.join('\t');
 
         console.log(outro_data);
         document.getElementById('data_display').innerHTML = filename_to_dl + "\n" + outro_data + '\n\n\n<button onclick="dl_as_file();"> try saving again </button>\n\n\n<button onclick="copy_to_clip();"> copy to clipboard </button>';
