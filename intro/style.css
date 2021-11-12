@@ -1,0 +1,40 @@
+a:link {
+    color: #c6c6ec;
+}
+
+a:visited {
+    color: #d9d9df;
+}
+
+a:hover {
+    color: #d1d1ff;
+}
+
+body {
+    text-align: center;
+    color: #FFF;
+    background: #000;
+}
+
+ul {
+    list-style-type: square;
+}
+
+.texts li {
+    margin: 0.5em 0;
+}
+
+.centered {
+    display: inline-block;
+    background: #000;
+}
+
+.texts {
+    max-width: 38em;
+    min-width: 15em;
+    font-size: 110%;
+    line-height: 150%;
+    text-align: left;
+    text-indent: 0;
+    padding: 0 0.5em;
+}
