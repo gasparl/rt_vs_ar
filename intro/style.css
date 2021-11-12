@@ -18,6 +18,7 @@ body {
 
 ul {
     list-style-type: square;
+    width: 90%;
 }
 
 .texts li {
@@ -34,7 +35,7 @@ ul {
     min-width: 15em;
     font-size: 110%;
     line-height: 150%;
-    text-align: left;
+    text-align: justify;
     text-indent: 0;
     padding: 0 0.5em;
 }
