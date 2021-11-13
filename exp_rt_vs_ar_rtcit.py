@@ -20,8 +20,7 @@ from itertools import permutations
 from platform import python_version
 from psychopy import __version__
 import rtcit_translations as tr
-
-print(tr.lgs)
+print(tr.lgs[tr.lang])
 
 # =============================================================================
 # testing
@@ -72,8 +71,8 @@ all_items = {
 targetref_words = ('TRUE', 'MEANINGFUL', 'RECOGNIZED')
 nontargref_words = ('UNTRUE', 'FAKE', 'FOREIGN', 'RANDOM', 'UNFAMILIAR', 'INVALID')
 
-general_intro = 'Bitte platzieren Sie Ihr Kinn auf der Kinnstütze und passen Sie die Höhe Ihres Stuhls an, wenn nötig (Hebel befindet sich unten auf der rechten Seite).\n\nDa es manchmal Störgeräusche geben kann, empfiehlt es sich, die Kopfhörer zu benuzten.\n\nDa Sie sich nun in einem simulierten Szenario befinden, in dem Sie angeben, KEIN Deutsch zu sprechen, werden die Instruktionen für das folgende Experiment in Englisch auf dem Bildschirm präsentiert. Sollten Sie irgendwelche Fragen haben, können Sie sich jederzeit an den Experimentleiter wenden.\n\nUm anzufangen, bitte die Leertaste drücken.'
-
+block_num = 0
+all_main_rts = { 'probe' : [], 'control': [] }
 
 def escaper():
     instruction_page.setText('Sure you want to quit? Press Q to quit, press the spacebar to continue.')
@@ -94,10 +93,9 @@ globalKeys.add(key="escape", func=escaper)
 def execute():
     start_input() # prompt to input stuff
     # now initiate stuff
-    basic_variables() # basic variables assigned, calculated
     set_screen() # creates psychopy screen and stim objects
     # window opens
-    show_instruction(general_intro)
+    show_instruction('START')
     create_file() # create output file
     create_item_base() # base of items to be presented
     maus.setVisible(False) # hide mouse
@@ -113,11 +111,10 @@ def execute():
 
 def ending():
     full_duration = round( ( datetime.now() - start_date ).total_seconds()/60, 2)
-    if len(all_main_rts['probe']) > 5 and len(all_main_rts['irrelevant']) > 5:
-        mean_diff = (mean(all_main_rts['probe']) - mean(all_main_rts['irrelevant']))
+    if len(all_main_rts['probe']) > 5 and len(all_main_rts['control']) > 5:
+        mean_diff = (mean(all_main_rts['probe']) - mean(all_main_rts['control']))
     else:
         mean_diff = 'NA'
-        end_feed = ''
     data_out.write("session_info\t" +
                    "/".join( ['duration','mean_diff', 'python_v', 'psypy_v',
                               'guilt', 'cit_order', 'items_order', 'block_order',
@@ -233,7 +230,7 @@ def start_input():
         quit()
 
 def set_conds():    
-    global item_sets, item_cats, probe_set, cit_order, items_order, block_order
+    global item_sets, item_cats, probe_set, cit_order, items_order, block_order, guilt
     subj_num = int(subj_id) - 1
     if not (subj_id != '' and subj_num > -1 and subj_num <= 200):
         print('subject number must be between 1 and 200')
@@ -279,6 +276,9 @@ def prep_table():
     for sid in range(200):
         subj_id = str(sid+1)
         data_out += set_conds()
+    data_out=open('exp_rt_vs_ar_table.txt', 'a', encoding='utf-8')
+    data_out.write(data_out)
+    data_out.close()
 
 def create_item_base():
     global blcks_base, stims_base, targetrefs, nontargrefs, the_targets, the_main_items, task_probes
@@ -314,7 +314,7 @@ def create_item_base():
                     itmtype = "target"
                     the_targets.append(itm)
                 else:
-                    itmtype = "irrelevant" + str(idx-1)
+                    itmtype = "control" + str(idx-1)
                     the_main_items.append(itm)
                 stim_base_tmp[categ].append({'word': itm, 
                                              'item_type': itmtype, 
@@ -506,18 +506,12 @@ def diginto_dict(dct, indx, key_name, min_dstnc):
     return [ d[key_name] for d in dct[ strt : indx+min_dstnc ] ] # return all values for the specified dict key within the specified distance (from the specified dictionary)
 
 
-def basic_variables():
-    global guilt, block_num, all_main_rts
-    guilt = 1 # always guilty
-    block_num = 0
-    all_main_rts = { 'probe' : [], 'irrelevant': [] }
-
 # create output file, begin writing, reset parameters
 def create_file():
     global data_out, start_date 
     start_date = datetime.now()
     f_name = 'exp_rt_vs_ar_' + subj_id + start_date.strftime("_%Y%m%d_%H%M_") + '.txt'
-    data_out=open(f_name, 'a', encoding='utf-8')
+    data_out = open(f_name, 'a', encoding='utf-8')
     data_out.write( '\t'.join( [ "subject_id", "phase", "block_number", "trial_number", "stimulus_shown", "category", "stim_type", "response_key", "rt_start", "incorrect", "too_slow", "press_duration", "isi", "date_in_ms" ] ) + "\n" )
     print("File created:", f_name)
 
@@ -687,7 +681,7 @@ def run_block():
                     incorrect += 1
                     show_false()
             elif resp_key == nontargetkey:
-                if stim_type[:10] in ("probe","irrelevant", "nontargref"):
+                if stim_type[:10] in ("probe","control", "nontargref"):
                     incorrect = 0
                     tooslow = 0
                 else:
@@ -709,14 +703,14 @@ def collect_rts(): # for practice evaluation & dcit calculation
     global rt_data_dict, all_main_rts, rt_start
     if (incorrect+tooslow) > 0:
         rt_start = -9
-    if stim_type[:10] in ("probe","irrelevant"):
+    if stim_type[:10] in ("probe","control"):
         group_type = 'main_item'
     else:
         group_type = stim_type
     if group_type not in rt_data_dict:
         rt_data_dict[group_type] = []
     rt_data_dict[group_type].append(rt_start)
-    if block_num in (4,5,7,8) and stim_type[:10] in ("probe","irrelevant") and incorrect != 1 and tooslow != 1 and rt_start > 0.15 and rt_start < main_ddline:
+    if block_num in (4,5,7,8) and stim_type[:10] in ("probe","control") and incorrect != 1 and tooslow != 1 and rt_start > 0.15 and rt_start < main_ddline:
         all_main_rts[ stim_type[:10] ].append(rt_start)
 
 def show_false():
@@ -735,9 +729,6 @@ def show_tooslow():
     win.flip()
     wait(feed_time)
     center_disp.color = 'white'
-
-
-
 
 # EXECUTE
 execute()
