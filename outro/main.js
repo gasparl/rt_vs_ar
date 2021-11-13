@@ -5,13 +5,13 @@ let subj_id, guilt, cit_order, block_order, probe_set, item_sets, item_cats, fil
 all_items = {
     1: {
         "banks": ["Phoenix Community Trust", "Citizen Union Finances", "Vertex Corporation Banks", "Goldward Credit Union", "Springwell Bank Group", "Elysium Holding Company"],
-        "surnames": ["Phil Jenks", "Tim Howe", "Ray Snell", "Neil Rand", "Gene Falk", "Ralph Croft"],
-        "forenames": ["kocht57", "langen92", "mullf29", "kugerh83", "hornm64", "bohml56"]
+        "forenames": ["Jenks", "Howe", "Snell", "Rand", "Falk", "Croft"],
+        "surnames": ["Phil", "Tim", "Ray", "Neil", "Gene", "Ralph"]
     },
     2: {
         "banks": ["Elysium Holding Company", "Citadel Syndicate Group", "Zenith National Holdings", "Vanguard Savings Bank", "Bulwarks Credit Union", "Phoenix Community Trust"],
-        "surnames": ["Dale Spence", "Wayne Bryant", "Glenn Platt", "Walt Rusk", "Tod Ames", "Earl Dade"],
-        "forenames": ["nowakp36", "huberm94", "mullerf27", "schrobh84", "kugele41", "bohmej58"]
+        "forenames": ["Spence", "Bryant", "Platt", "Rusk", "Ames", "Dade"],
+        "surnames": ["Dale", "Wayne", "Glenn", "Walt", "Tod", "Earl"]
     }
 };
 

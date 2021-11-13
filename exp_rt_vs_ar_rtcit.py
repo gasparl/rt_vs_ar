@@ -20,7 +20,7 @@ from itertools import permutations
 from platform import python_version
 from psychopy import __version__
 import rtcit_translations as tr
-print(tr.lgs[tr.lang])
+print(tr.lgs[tr.lg])
 
 # =============================================================================
 # testing
@@ -59,17 +59,19 @@ nontargetkey = 'e'
 all_items = {
     1: {
         "banks": ["Phoenix Community Trust", "Citizen Union Finances", "Vertex Corporation Banks", "Goldward Credit Union", "Springwell Bank Group", "Elysium Holding Company"],
-        "surnames": ["Phil", "Tim", "Ray", "Neil", "Gene", "Ralph"],
-        "forenames": ["Jenks", "Howe", "Snell", "Rand", "Falk", "Croft"]
+        "forenames": ["Jenks", "Howe", "Snell", "Rand", "Falk", "Croft"],
+        "surnames": ["Phil", "Tim", "Ray", "Neil", "Gene", "Ralph"]
     },
     2: {
         "banks": ["Elysium Holding Company", "Citadel Syndicate Group", "Zenith National Holdings", "Vanguard Savings Bank", "Bulwarks Credit Union", "Phoenix Community Trust"],
-        "surnames": ["Dale", "Wayne", "Glenn", "Walt", "Tod", "Earl"],
-        "forenames": ["Spence", "Bryant", "Platt", "Rusk", "Ames", "Dade"]
+        "forenames": ["Spence", "Bryant", "Platt", "Rusk", "Ames", "Dade"],
+        "surnames": ["Dale", "Wayne", "Glenn", "Walt", "Tod", "Earl"]
     }}
 
-targetref_words = ('TRUE', 'MEANINGFUL', 'RECOGNIZED')
-nontargref_words = ('UNTRUE', 'FAKE', 'FOREIGN', 'RANDOM', 'UNFAMILIAR', 'INVALID')
+targetref_words = tr.targetref_words_orig[tr.lg]
+nontargref_words = tr.nontargref_words_orig[tr.lg]
+blck_texts = tr.blck_texts[tr.lg]
+blck_texts += blck_texts[len(blck_texts)-2:]
 
 block_num = 0
 all_main_rts = { 'probe' : [], 'control': [] }
@@ -126,7 +128,7 @@ def ending():
     data_out.close()
     show_instruction( "Test completed. Please inform the experiment leader." )
 
-    
+
 def set_screen(): # screen properties
     global win, start_text, left_label, right_label, center_disp, instruction_page, maus, kb    
     win = Window([1280, 1000], color='Black', fullscr = fullscreen, screen = 1, units = 'pix', allowGUI = True) # 1280 1024
@@ -137,100 +139,21 @@ def set_screen(): # screen properties
     instruction_page = TextStim(win, wrapWidth = 1200, height = 28, font='Verdana', color = instruction_color)
     kb = keyboard.Keyboard()
 
-def task_instructions( whichtext = ''):
-    keys_info = 'During the experiment, various words will appear in the middle of the screen. You have to categorize each word by pressing the key "E" on the left or the key "I" on the right.'
-    inducer_info = 'You have to categorize each word that appears during the test by pressing the key "E" on the left or the key "I" on the right.\n\nPress the right ("I") key, when you see a word that refers to correctness or familiarity. These words are: "' + '", "'.join(targetref_words).upper() + '". Press the left ("E") key, when you see a word referring to incorrectness or unfamiliarity. These words are: "' + '", "'.join(nontargref_words).upper() + '".'
-
-    main_item_info = ' Press the right ("I") key when you see any of the following target German words: "' + '", "'.join(the_targets).upper() + '".\n\nPress the left ("E") key to all other words ("' + '", "'.join(the_main_items).upper() + '").'
-    if whichtext == 'targetcheck':
-        return 'In the actual test various German words (or pseudowords) will appear too. ' + main_item_info
-    elif whichtext == 'firstblock':
-        return keys_info + '\n\nThere will be three short practice rounds. In this first practice round, you have to categorize expressions that refer to familiarity or unfamiliarity. '  + inducer_info
-    elif block_num > 1:
-        return  keys_info + inducer_info + '\n\nThe rest of the items are German words (or pseudowords).' + main_item_info
-    else:
-        return  keys_info + inducer_info
-
-def set_block_info(feedb = '', catnum = 0, first = True):
-    global block_info, incorrect, tooslow
-    move_on = '\n\nPress Space to move on.\n\nIf needed, press Enter (or one of the arrow keys) to read the full instructions again.'
-    block_info = [""]
-    leadon = 'next to the words "' + '", "'.join(targetref_words).upper() + '", there is only one German word that need the right key response: "'
-    endon = '". Press the left key for everything else. '
-    target_reminder = []
-    for block_itms in blcks_base:
-        target_reminder.append(leadon + block_itms[1]['word'].upper() + endon)
-
-    block_info.append( feedb + task_instructions('firstblock') + '\n\nPress Space to move on.')
-    if first == True:
-        begin = 'Now, in this second practice round, we just want to see that you clearly understand the task. Therefore, you will have a lot of time to choose each of your responses, just make sure you choose accurately. '
-    elif feedb == '':
-        begin = 'Well done. Next section comes.\n\n'
-    elif feedb == 'failedone':
-        begin = 'You did not give a correct response, so you have to repeat this section! '
-    else:
-        begin = ''
-
-    block_info.append(begin + 'You must respond to each item correctly! If you choose an incorrect response (or not give response for over 10 seconds), you will have to repeat the given section. There are four short sections.\n\nIn this section (no. ' + str(catnum + 1) + '), ' + target_reminder[catnum] + move_on)
-
-    if first == True:
-        begin = 'You passed the second practice round. In this third and last practice round, you again have to respond fast, but a certain rate of error is allowed. Again there are four short sections.'
-    elif feedb == '':
-        begin = 'Well done. Next section comes.\n\n'
-    else:
-        begin = ''
-
-    block_info.append(feedb + begin + "\n\nIn this section (no. " + str(catnum + 1) + "), " + target_reminder[catnum] + move_on)
-
-    block_info.append("Good job. Now begins the actual test. The task is the same. There will be four blocks, separated by pause. In this first block, " +
-      target_reminder[0] +
-      "\n\nTry to be as accurate and as fast as possible.\n" + move_on)
-
-    block_info.append(
-      "In the coming second block, " +
-      target_reminder[1] +
-      "\n\nTry to be as accurate and as fast as possible." + move_on)
-
-    block_info.append(
-      "In the coming third block, " +
-      target_reminder[2] +
-      "\n\nTry to be as accurate and as fast as possible." + move_on)
-
-    block_info.append(
-      "In the coming fourth and last block, " +
-      target_reminder[3] +
-      "\n\nTry to be as accurate and as fast as possible." + move_on)
 
 def start_input():
     global subj_id, categories
     print("subj_id:", subj_id)
-    
-    
     input_box = Dlg(title='Session information', labelButtonOK='OK', labelButtonCancel='Cancel')
-    input_box.addText(text='_________________________________________________________')
-    input_box.addText(text='DO NOT CHANGE! (to be completed by experiment leader):')
-    input_box.addField(label='Subject number', tip = 'numbers')
-    input_box.addText(text='')
+    input_box.addField(label='Subject number', tip = 'number between 1 and 200')
     input_box.show()
     if input_box.OK:
         subj_id = input_box.data[0]
-    
-
-        # categories = ['probe1', 'probe2', 'probe3', 'probe4']
-
-        # probes_list = all_items['actual_fam_probe']
-        # shuffle(probes_list)
-        # true_probes = {}
-        # for cat in categories:
-        #     true_probes[cat] = probes_list.pop()
-        # 
-           
-
+        set_conds()
     else:
         quit()
 
-def set_conds():    
-    global item_sets, item_cats, probe_set, cit_order, items_order, block_order, guilt
+def set_conds(prep_tab = False):    
+    global item_cats, probe_set, cit_order, items_order, block_order, guilt
     subj_num = int(subj_id) - 1
     if not (subj_id != '' and subj_num > -1 and subj_num <= 200):
         print('subject number must be between 1 and 200')
@@ -241,8 +164,12 @@ def set_conds():
         guilt = 'innocent'    
     if ((subj_num // 2) % 2 == 0):
         cit_order = 'RT_ANS'
+        rt_item_set = 1
+        ans_item_set = 2
     else:
         cit_order = 'ANS_RT' 
+        rt_item_set = 2
+        ans_item_set = 1
     if ((subj_num // 4) % 2 == 0):
         items_order = '1_2'
         item_sets = [1, 2]
@@ -265,71 +192,71 @@ def set_conds():
         probe_set = 4
     else:
         probe_set = 5
-    subj_info = '\n-- '.join(['ID: ' + subj_id, guilt[0], cit_order, items_order, block_order, 'p' + str(probe_set)])
-    print(subj_info)    
-    return('\t'.join([subj_id, guilt, cit_order, items_order, block_order, 
-                      'p' + str(probe_set)]) + '\n')  # add actual probes
+    # select the one set from the two
+    ans_probes = create_item_base( all_items[item_sets[rt_item_set-1]],
+                                  all_items[item_sets[ans_item_set-1]])
+    subj_info = '\n-- '.join(['ID: ' + subj_id, guilt[0], cit_order, 
+                              items_order, block_order, 'p' + str(probe_set)])
+    print(subj_info)
+    
+    if prep_tab == False:
+        confirm_box = Dlg(title='Confirmation', labelButtonOK='ALL CORRECT', labelButtonCancel='Cancel')
+        confirm_box.addText('Is the following information correct?' + subj_info)
+        confirm_box.show()
+        if not confirm_box.OK:
+            quit()
+    else: # to create participants' table
+        return('\n' + '\t'.join([subj_id, guilt, cit_order, items_order, 
+                                 block_order, 'p' + str(probe_set), 
+                                 '; '.join(task_probes), '; '.join(ans_probes)]))
 
 def prep_table():
     global subj_id
-    data_out = '\t'.join(['subj_id', 'guilt', 'cit_order', 'items_order', 'block_order', 'probe_set'])
+    table_out = '\t'.join(['subj_id', 'guilt', 'cit_order',
+                           'items_order', 'block_order', 'probe_set', 
+                           'probes_rt', 'probes_ans'])
     for sid in range(200):
         subj_id = str(sid+1)
-        data_out += set_conds()
-    data_out=open('exp_rt_vs_ar_table.txt', 'a', encoding='utf-8')
-    data_out.write(data_out)
-    data_out.close()
+        table_out += set_conds(prep_tab = True)
+    table_file = open('expX_rt_vs_ar_table.txt', 'a', encoding='utf-8')
+    table_file.write(table_out)
+    table_file.close()
 
-def create_item_base():
+def create_item_base(words_base, words_other):
     global blcks_base, stims_base, targetrefs, nontargrefs, the_targets, the_main_items, task_probes
-    
-    
-    # for it_set, num1 in enumerate(item_sets):
-    #     words_lists.append([])
-    #     for itemskey, num2 in enumerate(item_cats):
-    #         itemlist = all_items[it_set][itemskey]
-    #         words_lists[num1].append([])
-    #         for item, indx in enumerate(itemlist):
-    #             if ((probe_set - 1) == indx):
-    #                 words_lists[num1][num2].append(item)
-    #                 all_probes.append(item)
-    #             elif (probe_set != indx):
-    #                 words_lists[num1][num2].append(item)
-    #         words_lists[num1][num2].append("I don't know.")
-            
-            
-    stim_base_tmp = {}
+    stims_base = {}
     the_targets = []
     task_probes = []
+    ans_probes = []
     the_main_items = []
-    for pset in (1, 2):
-        for categ in categories:
-            stim_base_tmp[categ] = []
-            for idx, itm in enumerate(all_items[pset][categ]): ## create basic dictionaries for the 6 crucial items, with types and categories
-                if idx == 0:
-                    itmtype = "probe"
-                    the_main_items.append(itm)
-                    task_probes.append(itm)
-                elif idx == 1:
-                    itmtype = "target"
-                    the_targets.append(itm)
-                else:
-                    itmtype = "control" + str(idx-1)
-                    the_main_items.append(itm)
-                stim_base_tmp[categ].append({'word': itm, 
-                                             'item_type': itmtype, 
-                                             'categ': categ })
-    stims_base = deepcopy(stim_base_tmp)
+    for categ in item_cats:
+        stims_base[categ] = []
+        for idx, itm in enumerate(words_base[categ]): ## create basic dictionaries for the 6 crucial items, with types and categories
+            if idx == (probe_set - 1):
+                itmtype = "probe"
+                the_main_items.append(itm)
+                task_probes.append(itm)
+                ans_probes.append(words_other[categ][idx])
+            elif idx == probe_set:
+                itmtype = "target"
+                the_targets.append(itm)
+            else:
+                itmtype = "control"
+                the_main_items.append(itm)
+            stims_base[categ].append({'word': itm,
+                                      'item_type': itmtype,
+                                      'categ': categ })
     the_main_items.sort()
     blcks_base = []
-    for cat in categories: # this blcks_base now equals stim_base but could be different
-        blcks_base.append( deepcopy( stim_base_tmp[cat] ) )
+    for cat in item_cats: # this blcks_base now equals stim_base but could be different
+        blcks_base.append( deepcopy( stims_base[cat] ) )
     targetrefs = []
     nontargrefs = []
     for ref_word in targetref_words:
         targetrefs.append({'word': ref_word, 'item_type': 'targetref', 'categ': 'inducer' })
     for ref_word in nontargref_words:
         nontargrefs.append({'word': ref_word, 'item_type': 'nontargref', 'categ': 'inducer' })
+    return(ans_probes)
 
 def main_items():
     global blcks_base, crrnt_phase
@@ -547,7 +474,7 @@ curr_catnum = 0
 all_prac_blks = [[], []]
 
 def next_block():
-    global ddline, block_num, rt_data_dict, blck_itms, firsttime, crrnt_phase, curr_catnum
+    global ddline, block_num, rt_data_dict, blck_itms, firsttime, crrnt_phase, curr_catnum, block_info
     if len(blcks_base) > 0:
         crrnt_phase = 'practice'
         if ( block_num in [0] + practice_blocknums ):
@@ -556,24 +483,23 @@ def next_block():
                     all_prac_blks[block_num].pop(0)
                     if len(all_prac_blks[block_num]) == 0:
                         block_num+=1
-                        set_block_info(feedb = '', catnum = 0, first = True)
+                        block_info = 'TODO'
                         curr_catnum = 0
                     else:
                         curr_catnum += 1
-                        set_block_info(feedb = '', catnum = curr_catnum, first = False)
+                        block_info = 'TODO'
                 else:
                     block_num+=1
-                    set_block_info(feedb = '', catnum = 0, first = True)
+                    block_info = 'TODO'
+                    #set_block_info(feedb = '', catnum = 0, first = True)
             rt_data_dict = {}
             if block_num == 1:
                 blck_itms = inducer_items()
                 ddline = main_ddline
             elif block_num == 2:
                 if firsttime:
-                    # target_check() # ensures subject payed attention to target items
-                    show_instruction( task_instructions('targetcheck') + '\n\nPress Space to move on.' )
                     firsttime = False
-                    prep_all_practice()
+                    prep_all_practice() # TODO??
                 blck_itms = practice_items()
                 ddline = 10
             elif block_num == 3:
@@ -617,7 +543,8 @@ def practice_eval():
             if is_valid == False:
                 feedb = "You will have to repeat this practice round, because of too few correct responses.\n\nYou need at least " + str( int(min_ratio*100) ) + "% accuracy on each item type, but you did not have enough correct responses for the following one(s):" + ", ".join(types_failed) +  ". Please try to make responses accurately and in time.\n\n"
     if is_valid == False:
-        set_block_info(feedb = feedb, catnum = curr_catnum, first = False)
+        #TODO
+        #set_block_info(feedb = feedb, catnum = curr_catnum, first = False)
         if block_num > 1:
             all_prac_blks[block_num][0] = block_prac_items(all_prac_blks[block_num][0])
     return is_valid
@@ -630,14 +557,14 @@ def show_instruction(instruction_text):
     kb.waitKeys(keyList = ['space'])
 
 def show_block_instr():
-    instruction_page.setText( block_info[block_num] )
+    instruction_page.setText( block_info )
     instruction_page.draw()
     win.flip()
     wait(instr_wait)
-    show_again = ['left', 'up', 'right', 'down','return']
-    inst_resp = kb.waitKeys( keyList = [ 'space' ] + show_again )
-    if inst_resp[0] in show_again:
-        show_instruction( task_instructions() + '\n\nPress Space to move on.' )
+    show_again = 'return'
+    inst_resp = kb.waitKeys( keyList = [ 'space', 'return' ] )
+    if inst_resp[0] == show_again:
+        show_instruction(  blck_texts[block_num] + tr.move_on[tr.lg] )
         show_block_instr()
 
 def run_block():
@@ -731,4 +658,4 @@ def show_tooslow():
     center_disp.color = 'white'
 
 # EXECUTE
-execute()
+#execute()
