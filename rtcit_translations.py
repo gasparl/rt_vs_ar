@@ -29,11 +29,10 @@ move_on = {
 }
 
 show_inst = {
-    'en': 'If needed, press Enter to read the full instructions again.',
+    'en': ' If needed, press Enter to read the full instructions again.',
     'de': '...',
     'jp': '日本語'
 }
-
 
 taptostart = {
     'en': 'Press space to start.',
@@ -65,18 +64,17 @@ it_type_feed_dict = {
     'jp': '日本語'
 }
 
-accrep_feed = {
+acc_feed1 = {
     'en': 'You will have to repeat this practice round due to a wrong response (or too much waiting).',
     'de': 'Sie müssen die Übungsrunde wegen einer falschen (oder zu langsamen) Antwort wiederholen.',
     'jp': '日本語'
 }
 
-acc_feed = {
+acc_feed2 = {
     'en': {
-        'start': 'You will have to repeat this practice round because of too few correct responses ',
-        'targs': 'to the items to be categorized with the right ("I") key. Please pay more attention to these items!',
-        'nontargs': 'to the items to be categorized with the left ("E") key. Please pay more attention to these items!',
-        'allits': 'to all the item types. Please pay more attention!'
+        'targs': 'You will have to repeat this practice round because of too few correct responses to the items to be categorized with the right ("I") key. Please pay more attention to these items!',
+        'nontargs': 'You will have to repeat this practice round because of too few correct responses to the items to be categorized with the left ("E") key. Please pay more attention to these items!',
+        'allits': 'You will have to repeat this practice round because of too few correct responses to all the item types. Please pay more attention!'
         },
     'de': '...',
     'jp': {
@@ -87,7 +85,7 @@ acc_feed = {
         }
 }
 
-cit_completed = {
+completed = {
     'en': 'Test completed. Please inform the experiment leader.',
     'de': '...',
     'jp': '日本語'

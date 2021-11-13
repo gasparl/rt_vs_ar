@@ -126,24 +126,31 @@ def ending():
                                __version__, guilt, cit_order, items_order, 
                                block_order, probe_set]]) + "\n")
     data_out.close()
-    show_instruction( "Test completed. Please inform the experiment leader." )
+    show_instruction( tr.completed[tr.lg] )
 
 
 def set_screen(): # screen properties
     global win, start_text, left_label, right_label, center_disp, instruction_page, maus, kb    
-    win = Window([1280, 1000], color='Black', fullscr = fullscreen, screen = 1, units = 'pix', allowGUI = True) # 1280 1024
-    start_text = TextStim(win, color=instruction_color, font='Verdana', text = 'Press Space to start.', pos = [0,-300], height=35, bold = True, wrapWidth= 1100)
-    left_label = TextStim(win, color='white', font='Verdana', text = '', pos = [-350,-160], height=35, alignHoriz='center')
-    right_label = TextStim(win, color='white', font='Verdana', text = '', pos = [350,-160], height=35, alignHoriz='center')
+    win = Window([1280, 1000], color='Black', fullscr = fullscreen, 
+                 screen = 1, units = 'pix', allowGUI = True) # 1280 1024
+    start_text = TextStim(win, color=instruction_color, font='Verdana', 
+                          text = 'Press Space to start.', pos = [0,-300], 
+                          height=35, bold = True, wrapWidth= 1100)
+    left_label = TextStim(win, color='white', font='Verdana', 
+                          text = '', pos = [-350,-160], height=35, alignHoriz='center')
+    right_label = TextStim(win, color='white', font='Verdana', 
+                           text = '', pos = [350,-160], height=35, alignHoriz='center')
     center_disp = TextStim(win, color='white', font='Arial', text = '', height = 45)
-    instruction_page = TextStim(win, wrapWidth = 1200, height = 28, font='Verdana', color = instruction_color)
+    instruction_page = TextStim(win, wrapWidth = 1200, height = 28, 
+                                font='Verdana', color = instruction_color)
     kb = keyboard.Keyboard()
 
 
 def start_input():
     global subj_id, categories
     print("subj_id:", subj_id)
-    input_box = Dlg(title='Session information', labelButtonOK='OK', labelButtonCancel='Cancel')
+    input_box = Dlg(title='Session information', 
+                    labelButtonOK='OK', labelButtonCancel='Cancel')
     input_box.addField(label='Subject number', tip = 'number between 1 and 200')
     input_box.show()
     if input_box.OK:
@@ -200,17 +207,18 @@ def set_conds(prep_tab = False):
     print(subj_info)
     
     if prep_tab == False:
-        confirm_box = Dlg(title='Confirmation', labelButtonOK='ALL CORRECT', labelButtonCancel='Cancel')
+        confirm_box = Dlg(title='Confirmation', labelButtonOK='ALL CORRECT', 
+                          labelButtonCancel='No, cancel')
         confirm_box.addText('Is the following information correct?' + subj_info)
         confirm_box.show()
         if not confirm_box.OK:
             quit()
-    else: # to create participants' table
+    else:
         return('\n' + '\t'.join([subj_id, guilt, cit_order, items_order, 
                                  block_order, 'p' + str(probe_set), 
                                  '; '.join(task_probes), '; '.join(ans_probes)]))
 
-def prep_table():
+def prep_table(): # to create participants' spreadsheet
     global subj_id
     table_out = '\t'.join(['subj_id', 'guilt', 'cit_order',
                            'items_order', 'block_order', 'probe_set', 
@@ -268,6 +276,12 @@ def main_items():
     if testing == True:
         stim_dicts_f = stim_dicts_f[0:test_trial_num]
     return stim_dicts_f
+
+def strict_practice_items():
+    print('strict_practice_items()')
+    item_order_temp = deepcopy(blcks_base[0])
+    shuffle(item_order_temp)
+    return item_order_temp
 
 def rndmz_details(block_stim_base):
     item_order=[]
@@ -379,27 +393,10 @@ def inducer_items():
         stim_dicts_f = stim_dicts_f[0:test_trial_num]
     return stim_dicts_f # return final list (for blck_items var assignment)
 
-def practice_items():
+
+def full_practice_items():
     print('practice_items()')
-    return all_prac_blks[block_num][0]
-
-def prep_all_practice():
-    global all_prac_blks
-    allrefs = deepcopy(targetrefs + nontargrefs) # get inducers
-    all_prac_blks = ['']
-    le = len(categories)
-    for bnum in practice_blocknums:
-        all_prac_blks.append([])
-        if bnum == 2:
-            for ind, cat in enumerate(categories):
-                new = deepcopy(stims_base[cat] + allrefs[ind::le])
-                all_prac_blks[bnum].append(block_prac_items(new))
-        else:
-            for ind, cat in enumerate(categories):
-                new = deepcopy(stims_base[cat] + allrefs[ind%2::2] ) # add all other items
-                all_prac_blks[bnum].append(block_prac_items(new))
-
-def block_prac_items(blck_itms_temp):
+    blck_itms_temp = deepcopy(blcks_base[0])
     shuffle(blck_itms_temp) # shuffle it, why not
     # below the pseudorandomization to avoid close repetition of similar items (same item type)
     safecount = 0 # just to not freeze the app if sth goes wrong
@@ -468,85 +465,62 @@ def draw_labels():
         left_label.draw()
         right_label.draw()
 
-firsttime = True
-practice_blocknums = [1,2,3]
-curr_catnum = 0
-all_prac_blks = [[], []]
-
 def next_block():
-    global ddline, block_num, rt_data_dict, blck_itms, firsttime, crrnt_phase, curr_catnum, block_info
+    global ddline, block_num, rt_data_dict, blck_itms, crrnt_phase, block_info
     if len(blcks_base) > 0:
         crrnt_phase = 'practice'
-        if ( block_num in [0] + practice_blocknums ):
-            if block_num == 0 or practice_eval():
-                if block_num > 1:
-                    all_prac_blks[block_num].pop(0)
-                    if len(all_prac_blks[block_num]) == 0:
-                        block_num+=1
-                        block_info = 'TODO'
-                        curr_catnum = 0
-                    else:
-                        curr_catnum += 1
-                        block_info = 'TODO'
-                else:
-                    block_num+=1
-                    block_info = 'TODO'
-                    #set_block_info(feedb = '', catnum = 0, first = True)
-            rt_data_dict = {}
+        if block_num in (1,2,3,5,7):
+            if practice_eval():
+                block_num+=1
+                block_info = blck_texts[block_num]
             if block_num == 1:
                 blck_itms = inducer_items()
                 ddline = main_ddline
-            elif block_num == 2:
-                if firsttime:
-                    firsttime = False
-                    prep_all_practice() # TODO??
-                blck_itms = practice_items()
+            elif block_num in (2, 5, 7):
+                crrnt_phase = 'practice_strict'
+                blck_itms = strict_practice_items()
                 ddline = 10
             elif block_num == 3:
-                blck_itms = practice_items()
+                blck_itms = full_practice_items()
                 ddline = main_ddline
             else:
                 blck_itms = main_items()
         else:
             block_num+=1
+            block_info = blck_texts[block_num]
             blck_itms = main_items()
         run_block()
 
+first_try = False
 def practice_eval():
-    global min_ratio
+    global block_info, first_try
     is_valid = True
+    feedb = ''
+    if block_num == 3:
+        if first_try == True:
+            return True
+        else:
+            first_try = True
     if first_wrong == True:
         is_valid = False
-        feedb = 'failedone'
+        block_info = tr.acc_feed1[tr.lg][feedb] + tr.move_on[tr.lg] + tr.show_inst[tr.lg]
     elif block_num != 2:
-        types_failed = []
         if testing == False:
             if block_num == 1:
                 min_ratio = 0.8
             else:
                 min_ratio = 0.5
         for it_type in rt_data_dict:
-            it_type_feed_dict = { 'targetref': "English words requiring right-key response",
-        'nontargref': "English words requiring left-key response",
-        'main_item': "German words requiring left-key response",
-        'target': "German words requiring right-key response" }
             rts_correct = [ rt_item for rt_item in rt_data_dict[it_type] if rt_item > 0.15 ]
             corr_ratio = len( rts_correct )/ len( rt_data_dict[it_type] )
             if corr_ratio < min_ratio:
-              is_valid = False
-              types_failed.append(
-                " " +
-                it_type_feed_dict[it_type] +
-                " (" + str( int( corr_ratio*100 ) ) +
-                "% correct)"
-              )
-            if is_valid == False:
-                feedb = "You will have to repeat this practice round, because of too few correct responses.\n\nYou need at least " + str( int(min_ratio*100) ) + "% accuracy on each item type, but you did not have enough correct responses for the following one(s):" + ", ".join(types_failed) +  ". Please try to make responses accurately and in time.\n\n"
-    if is_valid == False:
-        #TODO
-        #set_block_info(feedb = feedb, catnum = curr_catnum, first = False)
-        if block_num > 1:
-            all_prac_blks[block_num][0] = block_prac_items(all_prac_blks[block_num][0])
+                is_valid = False
+                if feedb == '':
+                    feedb = it_type
+                else:
+                    feedb = 'allits'
+        if is_valid == False:
+            block_info = tr.acc_feed2[tr.lg][feedb] + tr.move_on[tr.lg] + tr.show_inst[tr.lg]
     return is_valid
 
 def show_instruction(instruction_text):
@@ -562,7 +536,7 @@ def show_block_instr():
     win.flip()
     wait(instr_wait)
     show_again = 'return'
-    inst_resp = kb.waitKeys( keyList = [ 'space', 'return' ] )
+    inst_resp = kb.waitKeys( keyList = [ 'space', show_again ] )
     if inst_resp[0] == show_again:
         show_instruction(  blck_texts[block_num] + tr.move_on[tr.lg] )
         show_block_instr()
@@ -585,15 +559,15 @@ def run_block():
         center_disp.setText(stim_text.upper())
         draw_labels()
         center_disp.draw()
-        win.flip()
         kb.clearEvents()
-        kb.clock.reset()
+        win.callOnFlip(kb.clock.reset)
+        win.flip()
         response = kb.waitKeys(maxWait = ddline, 
                                keyList=[targetkey, nontargetkey])[0]
         if not response:
             rt_start = kb.clock.getTime()
-            resp_key = '-'
-            press_dur = '-'
+            resp_key = 'NA'
+            press_dur = 'NA'
             tooslow += 1
             show_tooslow()
         else:
@@ -618,27 +592,27 @@ def run_block():
         win.flip()
         wait(isi_min_max[0]/1000)
         add_resp() # store trial data
-        if block_num == 2: # check if comprehension check has to be repeated
-            if (incorrect+tooslow) > 0 and first_ignore == False:
-                first_wrong = True
-                break
-        else:
-            collect_rts()
+        # check if comprehension check has to be repeated
+        if block_num == 2 and (incorrect+tooslow) > 0 and first_ignore == False:
+            first_wrong = True
+            break
+        collect_rts()
     next_block()
 
 def collect_rts(): # for practice evaluation & dcit calculation
     global rt_data_dict, all_main_rts, rt_start
     if (incorrect+tooslow) > 0:
         rt_start = -9
-    if stim_type[:10] in ("probe","control"):
-        group_type = 'main_item'
+    if stim_type in ("target", "targetref"):
+        group_type = 'targs'
     else:
-        group_type = stim_type
+        group_type = 'nontargs'
     if group_type not in rt_data_dict:
         rt_data_dict[group_type] = []
     rt_data_dict[group_type].append(rt_start)
-    if block_num in (4,5,7,8) and stim_type[:10] in ("probe","control") and incorrect != 1 and tooslow != 1 and rt_start > 0.15 and rt_start < main_ddline:
-        all_main_rts[ stim_type[:10] ].append(rt_start)
+    if (crrnt_phase == 'main' and stim_type in ("probe","control") and 
+        incorrect != 1 and tooslow != 1 and rt_start > 0.15 and rt_start < main_ddline):
+        all_main_rts[ stim_type ].append(rt_start)
 
 def show_false():
     center_disp.text = 'Wrong!'
