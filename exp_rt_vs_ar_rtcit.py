@@ -269,7 +269,6 @@ def create_item_base(words_base, words_other):
 def main_items():
     global blcks_base, crrnt_phase
     print('main_items()')
-    crrnt_phase = 'main'
     block_stim_base = blcks_base.pop(0)
     main_stims = add_inducers(block_stim_base)
     stim_dicts_f = [dct for sublist in main_stims for dct in sublist] # flatten
@@ -472,7 +471,7 @@ def next_block():
         if block_num in (1,2,3,5,7):
             if practice_eval():
                 block_num+=1
-                block_info = blck_texts[block_num]
+                block_info = blck_texts[block_num-1]
             if block_num == 1:
                 blck_itms = inducer_items()
                 ddline = main_ddline
@@ -486,8 +485,9 @@ def next_block():
             else:
                 blck_itms = main_items()
         else:
+            crrnt_phase = 'main'
             block_num+=1
-            block_info = blck_texts[block_num]
+            block_info = blck_texts[block_num-1]
             blck_itms = main_items()
         run_block()
 
@@ -538,7 +538,7 @@ def show_block_instr():
     show_again = 'return'
     inst_resp = kb.waitKeys( keyList = [ 'space', show_again ] )
     if inst_resp[0] == show_again:
-        show_instruction(  blck_texts[block_num] + tr.move_on[tr.lg] )
+        show_instruction(  blck_texts[block_num-1] + tr.move_on[tr.lg] )
         show_block_instr()
 
 def run_block():
