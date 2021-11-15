@@ -51,19 +51,6 @@ feedwrong = {
     'jp': '日本語'
 }
 
-it_type_feed_dict = {
-    'en': {
-        'targ_items': 'items to be categorized to the right side',
-        'nontarg_items': 'items to be categorized to the left side'
-    },
-
-    'de': {
-        'targetflr': '...',
-        'nontargflr': '...'
-    },
-    'jp': '日本語'
-}
-
 acc_feed1 = {
     'en': 'You will have to repeat this practice round due to a wrong response (or too much waiting).',
     'de': 'Sie müssen die Übungsrunde wegen einer falschen (oder zu langsamen) Antwort wiederholen.',
@@ -78,7 +65,6 @@ acc_feed2 = {
         },
     'de': '...',
     'jp': {
-        'start': '日本語',
         'targs': '日本語',
         'nontargs': '日本語',
         'allits': '日本語'
@@ -97,13 +83,13 @@ trefs = 'TREFS_PLACEHOLDER'
 nontrefs = 'NONTREFS_PLACEHOLDER'
 
 # instructions preceding given blocks, set based on the selected CIT version
-# In English it seems unnecessary, but in other languages, it is often better to clarify that the items appear 'one by one'. It may also be worthwhile to somehow make it clearer that the 'buttons' are just pressscreen surfaces.
+# In English it seems unnecessary, but in other languages, it is often better to clarify that the items appear 'one by one'.
 blck_texts = {
     'en': [
         # block 1
         'During the following test, various items will appear in the middle of the screen. You have to categorize each item by pressing the key "E" on the left or the key "I" on the right. There will be three short practice rounds. \n\nIn the first practice round, you have to categorize two kinds of items. \n\nPress the right ("I") key when you see any of the following items (referring to familiarity with the crime details):\n' + trefs + 'Press the left ("E") key when you see any other item. These other items are:\n' + nontrefs + 'There is a certain time limit for making each response. Please try to be both fast and accurate. In each of the two item categories, you need at least 80% correct responses in time, otherwise you have to repeat the practice round.',
         # block 2
-        'In the second practice round, you have to categorize the main test items. The aim of the entire test will be to show whether or not one of these main items (a crime detail) is recognized by you. ' + 'Press the right ("I") key when you see the following target item:\n' + targs +   'Press the left ("E") key when you see any other item. These other items are:\n' + nontargs + 'In this practice round, you will have a lot of time to choose each response, but you must respond to each item correctly. If you choose an incorrect response (or not give response for over 10 seconds), you will have to repeat the practice round.',
+        'In the second practice round, you have to categorize the main test items. The aim of the entire test will be to show whether or not one of these main items (a crime detail) is recognized by you. \n\nPress the right ("I") key when you see the following target item:\n' + targs +   'Press the left ("E") key when you see any other item. These other items are:\n' + nontargs + 'In this practice round, you will have a lot of time to choose each response, but you must respond to each item correctly. If you choose an incorrect response (or not give response for over 10 seconds), you will have to repeat the practice round.',
         # block 3
         'In the third and last practice round all items are present.\n\nYou again have to respond fast, but a certain number of errors is allowed. The task is the same. Press the right ("I") key when you see the following items:\n' + targs + trefs + 'Press the left ("E") key for everything else.',
         # block 4
