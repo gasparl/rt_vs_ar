@@ -77,27 +77,39 @@ completed = {
     'jp': '日本語'
 }
 
-targs = 'TARGETS_PLACEHOLDER'
-nontargs =  'NONTARGS_PLACEHOLDER'
-trefs = 'TREFS_PLACEHOLDER'
-nontrefs = 'NONTREFS_PLACEHOLDER'
+targs = 'TARGETS_PLACEHOLDER1'
+nontargs =  'NONTARGS_PLACEHOLDER2'
+trefs = 'TARGREFS_PLACEHOLDER3'
+nontrefs = 'NONTREFS_PLACEHOLDER4'
+comma = {
+    'en': ', ',
+    'de': ', ',
+    'jp': '、'
+}
+cmma = comma[lg]
 
 # instructions preceding given blocks, set based on the selected CIT version
 # In English it seems unnecessary, but in other languages, it is often better to clarify that the items appear 'one by one'.
 blck_texts = {
     'en': [
         # block 1
-        'During the following test, various items will appear in the middle of the screen. You have to categorize each item by pressing the key "E" on the left or the key "I" on the right. There will be three short practice rounds. \n\nIn the first practice round, you have to categorize two kinds of items. \n\nPress the right ("I") key when you see any of the following items (referring to familiarity with the crime details):\n' + trefs + 'Press the left ("E") key when you see any other item. These other items are:\n' + nontrefs + 'There is a certain time limit for making each response. Please try to be both fast and accurate. In each of the two item categories, you need at least 80% correct responses in time, otherwise you have to repeat the practice round.',
+        'During the following test, various items will appear in the middle of the screen. You have to categorize each item by pressing the key "E" on the left or the key "I" on the right. There will be three short practice rounds.\n\nIn the first practice round, you have to categorize two kinds of items. \n\nPress the right ("I") key when you see any of the following items (referring to familiarity with the crime details): ' + trefs + 
+        '.\nPress the left ("E") key when you see any other item. These other items are: ' + nontrefs + '.\n\nThere is a certain time limit for making each response. Please try to be both fast and accurate. In each of the two item categories, you need at least 80% correct responses in time, otherwise you have to repeat the practice round.',
         # block 2
-        'In the second practice round, you have to categorize the main test items. The aim of the entire test will be to show whether or not one of these main items (a crime detail) is recognized by you. \n\nPress the right ("I") key when you see the following target item:\n' + targs +   'Press the left ("E") key when you see any other item. These other items are:\n' + nontargs + 'In this practice round, you will have a lot of time to choose each response, but you must respond to each item correctly. If you choose an incorrect response (or not give response for over 10 seconds), you will have to repeat the practice round.',
+        'In the second practice round, you have to categorize the main test items. The aim of the entire test will be to show whether or not one of these main items (a crime detail) is recognized by you.\n\nPress the right ("I") key when you see the following target item: ' + targs + 
+        '.\nPress the left ("E") key when you see any other item. These other items are: ' + nontargs + '.\nIn this practice round, you will have a lot of time to choose each response, but you must respond to each item correctly. If you choose an incorrect response (or not give response for over 10 seconds), you will have to repeat the practice round.',
         # block 3
-        'In the third and last practice round all items are present.\n\nYou again have to respond fast, but a certain number of errors is allowed. The task is the same. Press the right ("I") key when you see the following items:\n' + targs + trefs + 'Press the left ("E") key for everything else.',
+        'In the third and last practice round all items are present.\n\nYou again have to respond fast, but a certain number of errors is allowed. The task is the same. Press the right ("I") key when you see the following items: ' + targs + cmma + trefs + 
+        '. Press the left ("E") key for everything else.',
         # block 4
-        'Now the actual test begins. The task is the same. Press the right ("I") key when you see the following items:\n' + targs + trefs + 'Press the left ("E") key for everything else.',
+        'Now the actual test begins. The task is the same. Press the right ("I") key when you see the following items: ' + targs + cmma + trefs + 
+        '. Press the left ("E") key for everything else.',
         # block 5
-        'Now the main words will be different. Press the right ("I") key when you see the following "target" item: ' + targs + '.\n\nPress the left ("E") key when you see any of the following items: ' + nontargs + '.\n\nTo make sure you understood this, in the following short practice round, you must respond to each item correctly, otherwise you have to repeat this round.',
+        'Now the main words will be different. Press the right ("I") key when you see the following "target" item: ' + targs + 
+        '. Press the left ("E") key when you see any of the following items: ' + nontargs + '.\n\nTo make sure you understood this, in the following short practice round, you must respond to each item correctly, otherwise you have to repeat this round.',
         # block 6
-        'Alright. The next block starts. The task is the same. Press the right ("I") key, when you see any of the following items: ' + targs + ', ' + trefs + '. Press the left ("E") key when you see any other item.'],
+        'Alright. The next block starts. The task is the same. Press the right ("I") key, when you see any of the following items: ' + targs + cmma + trefs +
+        '. Press the left ("E") key when you see any other item.'],
     'de': '...',
     'jp': [
         # block 1
