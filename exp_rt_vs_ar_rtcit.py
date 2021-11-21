@@ -107,10 +107,7 @@ def execute():
 
     print("************** END OF EXPERIMENT **************")
 
-    ending() # saves demographic & final infos, gives feedback
-
-    kb.waitKeys(keyList = ['b']) # press B to end the exp (prevents subject from closing window)
-    quit()
+    ending() # saves demographic & final infos, gives feedback, closes program
 
 def ending():
     full_duration = round( ( datetime.now() - start_date ).total_seconds()/60, 2)
@@ -129,10 +126,17 @@ def ending():
                                __version__, guilt, cit_order, items_order, 
                                block_order, probe_set]]) + "\n")
     data_out.close()
-    print('Correct probes: ', probs_corr, '(', round(probs_corr/54*100, 1), '%)')
-    print('Correct probes: ', conts_corr, '(', round(conts_corr/216*100, 1), '%)')
-    print('Mean diff (smaller than 20?): ', round(mean_diff, 1))
+    rtcit_eval = ('Correct probes: ' + str(probs_corr) + ' (' +
+                  str(round(probs_corr/54*100, 1)) + '%)' +
+                  '\nCorrect controls: ' + str(conts_corr) + ' (' +
+                  str(round(conts_corr/216*100, 1)) + '%)' +
+                  '\nMean diff (smaller than 20?): ' + str(round(mean_diff, 1)))
     show_instruction( tr.completed[tr.lg] )
+    
+    kb.waitKeys(keyList = ['b']) # press B to end the exp (prevents subject from closing window)
+    print(rtcit_eval)
+    show_instruction( rtcit_eval )
+    quit()
 
 
 def set_screen(): # screen properties
