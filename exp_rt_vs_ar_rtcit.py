@@ -77,6 +77,7 @@ block_num = 0
 all_main_rts = { 'probe' : [], 'control': [] }
 
 def escaper():    
+    win.flip()
     end_quest = TextStim(win, wrapWidth = 1200, height = 40, pos = [0,300],
                                 font='Verdana', color = 'red')
     end_quest.text = ('Sure you want to quit?\nPress Y to quit, or press the spacebar to continue.')
@@ -140,7 +141,7 @@ def ending():
 
 
 def set_screen(): # screen properties
-    global win, start_text, left_label, right_label, center_disp, instruction_page, maus, kb    
+    global win, start_text, left_label, right_label, center_disp, instruction_page, kb    
     win = Window([1280, 1000], color='Black', fullscr = fullscreen,
                  screen = 1, units = 'pix', allowGUI = False) # 1280 1024    
     start_text = TextStim(win, color=instruction_color, font='Verdana', 
@@ -446,7 +447,7 @@ def diginto_dict(dct, indx, key_name, min_dstnc):
 def create_file():
     global data_out, start_date 
     start_date = datetime.now()
-    f_name = 'exp_rt_vs_ar_' + subj_id + start_date.strftime("_%Y%m%d_%H%M") + '.txt'
+    f_name = 'exp_rt_vs_ar_rtcit_' + subj_id + start_date.strftime("_%Y%m%d_%H%M") + '.txt'
     data_out = open(f_name, 'a', encoding='utf-8')
     data_out.write( '\t'.join( [ "subject_id", "phase", "block_number", "trial_number", 
     "stimulus_shown", "category", "stim_type", "response_key", "rt_start", "incorrect", 
@@ -586,7 +587,7 @@ def run_block():
         stim_text = stim_current["word"]
         isi_delay = randint(1, isi_min_max[1]-isi_min_max[0]) / 1000
         wait(isi_delay) # wait ISI
-        center_disp.setText(stim_text.upper())
+        center_disp.text = stim_text
         draw_labels()
         center_disp.draw()
         win.callOnFlip(kb.clock.reset)
