@@ -32,9 +32,10 @@ trig_dur = 0.1
 instruction_color = '#9999FF'
 instr_wait = 0.3
 
-block_infos = ['You will be repeatedly shown the following items one by one: PLACEHOLDER. Say "no" whenever you see a new item.',
-            'You will now be shown the following items: PLACEHOLDER. Again, say "no" whenever you see a new item.',
-            'You will now be shown the following items: PLACEHOLDER. Again, say "no" whenever you see a new item.' ]
+block_infos = ['You will be repeatedly shown the following items one by one: PLACEHOLDER. Say "no" whenever you see a new item. Press space to move on.',
+            'You will now be shown the following items: PLACEHOLDER. Again, say "no" whenever you see a new item. Press space to move on.',
+            'You will now be shown the following items: PLACEHOLDER. Again, say "no" whenever you see a new item. Press space to move on.' ]
+pause_text = 'You can rest a little. Press space when you are ready to move on.'
 
 
 # =============================================================================
@@ -101,9 +102,7 @@ def execute():
     run_blocks() # begin task & run until finished
 
     print("************** END OF EXPERIMENT **************")
-    ending() # saves demographic & final infos, gives feedback, closes program
 
-def ending():
     data_out.write("session_info\t" +
                    "/".join( ['python_v', 'psypy_v', 'guilt', 'cit_order', 
                               'items_order', 'block_order', 'probe_set']) + '\t' + 
@@ -111,7 +110,8 @@ def ending():
                               [python_version(), __version__, guilt, cit_order,
                                items_order, block_order, probe_set]]) + "\n")
     data_out.close()    
-    show_inf( 'Test completed' )    
+    show_inf( 'Test completed' )
+    kb.waitKeys(keyList = ['b'])
     quit()
 
 def set_screen(): # screen properties
@@ -261,9 +261,12 @@ def run_blocks():
             center_disp.draw()
             win.callOnFlip(triggr)  
             win.flip()
-            wait(display_dur - isi_delay - trig_dur) # diplay word 
+            wait(display_dur - isi_delay - trig_dur) # diplay word
             win.flip()
             wait(isi_delay) # wait ISI
+            if trial_num % 5 == 0:
+                show_inf(pause_text)
+                wait(2)
 
 def show_inf(instruction_text):
     instruction_page.setText(instruction_text)
