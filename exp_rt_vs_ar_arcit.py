@@ -18,8 +18,6 @@ from datetime import datetime
 from psychopy.parallel import ParallelPort
 from platform import python_version
 from psychopy import __version__
-import rtcit_translations as tr
-print(tr.lgs[tr.lg])
 port = ParallelPort()
 
 # =============================================================================
@@ -42,7 +40,7 @@ pause_text = 'You can rest a little. Press space when you are ready to move on.'
 # testing
 # =============================================================================
 
-testing = False # True for testing, False for real recording
+testing = True # True for testing, False for real recording
 
 if testing:
     fullscreen = False
@@ -192,14 +190,13 @@ def set_conds(prep_tab = False):
         quit()
 
 def create_item_base(words_base):
-    global blcks_base, all_items
+    global blcks_base, block_words
     stims_base = {}
-    all_items = []
+    block_words = []
     for categ in item_cats:
         stims_base[categ] = []
         for idx, itm in enumerate(words_base[categ]): ## create basic dictionaries for the 6 crucial items, with types and categories
             if not idx == probe_set:
-                all_items.append(itm)
                 if idx == (probe_set - 1):
                     itmtype = "probe"
                 else:
@@ -207,7 +204,8 @@ def create_item_base(words_base):
                 stims_base[categ].append({'word': itm,
                                           'item_type': itmtype,
                                           'categ': categ })
-        all_items.append('、'.join(sorted(words_base[categ])))
+        newblockwords = '、'.join(sorted(words_base[categ]))
+        block_words.append(newblockwords)
     blcks_base = []
     for cat in item_cats: # this blcks_base now equals stim_base but could be different
         blcks_base.append( deepcopy( stims_base[cat] ) )
@@ -247,7 +245,7 @@ def add_resp():
 def run_blocks():
     global block_num, trial_num, stim_current, stim_text, stim_type
     while len(blcks_base) > 0:
-        show_inf(block_infos.pop(0).replace('PLACEHOLDER', all_items.pop(0)))
+        show_inf(block_infos.pop(0).replace('PLACEHOLDER', block_words.pop(0)))
         block_num += 1
         blck_itms = block_items()
         print('BLOCK', block_num)
@@ -263,10 +261,13 @@ def run_blocks():
             win.flip()
             wait(display_dur - isi_delay - trig_dur) # diplay word
             win.flip()
+            add_resp()
             wait(isi_delay) # wait ISI
-            if trial_num % 5 == 0:
+            if (trial_num+1) % 5 == 0:
+                data_out.write( 'PAUSE\n' )
                 show_inf(pause_text)
-                wait(2)
+                win.flip()
+                wait(isi_delay)
 
 def show_inf(instruction_text):
     instruction_page.setText(instruction_text)
