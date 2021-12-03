@@ -24,7 +24,7 @@ port = ParallelPort()
 # basics
 # =============================================================================
 
-display_dur = 30
+display_dur = 25
 isi_delay = 0.5
 trig_dur = 0.1
 instruction_color = '#9999FF'
@@ -46,7 +46,7 @@ if testing:
     fullscreen = False
     instr_wait = 0.1
     test_trial_num = 10
-    display_dur = 1
+    display_dur = 2
 else:
     fullscreen = True
 
@@ -58,13 +58,11 @@ all_items = {
     1: {
         "banks": ["Phoenix Community Trust", "Citizen Union Finances", "Vertex Corporation Banks", 
         "Goldward Credit Union", "Springwell Bank Group", "Elysium Holding Company"],
-        "forenames": ["Jenks", "Howe", "Snell", "Rand", "Falk", "Croft"],
-        "surnames": ["Phil", "Tim", "Ray", "Neil", "Gene", "Ralph"]
+        "names": ["Jenks", "Howe", "Snell", "Rand", "Falk", "Croft"]
     },
     2: {
         "banks": ["Elysium Holding Company", "Citadel Syndicate Group", "Zenith National Holdings", "Vanguard Savings Bank", "Bulwarks Credit Union", "Phoenix Community Trust"],
-        "forenames": ["Spence", "Bryant", "Platt", "Rusk", "Ames", "Dade"],
-        "surnames": ["Dale", "Wayne", "Glenn", "Walt", "Tod", "Earl"]
+        "names": ["Spence", "Bryant", "Platt", "Rusk", "Ames", "Dade"]
     }}
 
 
@@ -162,10 +160,10 @@ def set_conds(prep_tab = False):
         item_sets = [2, 1]   
     if ((subj_num // 8) % 2 == 0):
         block_order = 'banks_names'
-        item_cats = ['banks', 'forenames', 'surnames']
+        item_cats = ['banks', 'names']
     else:
         block_order = 'names_banks'
-        item_cats = ['forenames', 'surnames', 'banks']    
+        item_cats = ['names', 'banks']    
     if (subj_num <= 40):
         probe_set = 1
     elif (subj_num <= 80):
@@ -195,7 +193,7 @@ def create_item_base(words_base):
     block_words = []
     for categ in item_cats:
         stims_base[categ] = []
-        for idx, itm in enumerate(words_base[categ]): ## create basic dictionaries for the 6 crucial items, with types and categories
+        for idx, itm in enumerate(words_base[categ]): ## create basic dictionaries for the 4 crucial items, with types and categories
             if not idx == probe_set:
                 if idx == (probe_set - 1):
                     itmtype = "probe"
@@ -259,7 +257,7 @@ def run_blocks():
             center_disp.draw()
             win.callOnFlip(triggr)  
             win.flip()
-            wait(display_dur - isi_delay - trig_dur) # diplay word
+            wait(display_dur - trig_dur) # diplay word
             win.flip()
             add_resp()
             wait(isi_delay) # wait ISI

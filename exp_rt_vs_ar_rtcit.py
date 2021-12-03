@@ -59,19 +59,16 @@ all_items = {
     1: {
         "banks": ["Phoenix Community Trust", "Citizen Union Finances", "Vertex Corporation Banks", 
         "Goldward Credit Union", "Springwell Bank Group", "Elysium Holding Company"],
-        "forenames": ["Jenks", "Howe", "Snell", "Rand", "Falk", "Croft"],
-        "surnames": ["Phil", "Tim", "Ray", "Neil", "Gene", "Ralph"]
+        "names": ["Jenks", "Howe", "Snell", "Rand", "Falk", "Croft"]
     },
     2: {
         "banks": ["Elysium Holding Company", "Citadel Syndicate Group", "Zenith National Holdings", "Vanguard Savings Bank", "Bulwarks Credit Union", "Phoenix Community Trust"],
-        "forenames": ["Spence", "Bryant", "Platt", "Rusk", "Ames", "Dade"],
-        "surnames": ["Dale", "Wayne", "Glenn", "Walt", "Tod", "Earl"]
+        "names": ["Spence", "Bryant", "Platt", "Rusk", "Ames", "Dade"]
     }}
 
 targetref_words = sorted(tr.targetref_words_orig[tr.lg])
 nontargref_words = sorted(tr.nontargref_words_orig[tr.lg])
 blck_texts = tr.blck_texts[tr.lg]
-blck_texts += blck_texts[len(blck_texts)-2:]
 
 block_num = 0
 all_main_rts = { 'probe' : [], 'control': [] }
@@ -128,9 +125,9 @@ def ending():
                                block_order, probe_set]]) + "\n")
     data_out.close()
     rtcit_eval = ('Correct probes: ' + str(probs_corr) + ' (' +
-                  str(round(probs_corr/54*100, 1)) + '%)' +
+                  str(round(probs_corr/36*100, 1)) + '%)' +
                   '\nCorrect controls: ' + str(conts_corr) + ' (' +
-                  str(round(conts_corr/216*100, 1)) + '%)' +
+                  str(round(conts_corr/144*100, 1)) + '%)' +
                   '\nMean diff (smaller than 20?): ' + str(round(mean_diff, 1)))
     show_instruction( tr.completed[tr.lg] )
     
@@ -197,10 +194,10 @@ def set_conds(prep_tab = False):
         item_sets = [2, 1]   
     if ((subj_num // 8) % 2 == 0):
         block_order = 'banks_names'
-        item_cats = ['banks', 'forenames', 'surnames']
+        item_cats = ['banks', 'names']
     else:
         block_order = 'names_banks'
-        item_cats = ['forenames', 'surnames', 'banks']    
+        item_cats = ['names', 'banks']    
     if (subj_num <= 40):
         probe_set = 1
     elif (subj_num <= 80):
@@ -500,14 +497,14 @@ def next_block():
     global ddline, block_num, rt_data_dict, blck_itms, crrnt_phase, block_info
     if len(blcks_base) > 0:
         ddline = main_ddline
-        if (block_num not in (1,2,3,5,7)) or practice_eval():
+        if (block_num not in (1,2,3,5)) or practice_eval():
                 block_num+=1
                 block_info = replcs(blck_texts[block_num-1]) + tr.move_on[tr.lg]
         crrnt_phase = 'practice'
         rt_data_dict = {}
         if block_num == 1:
             blck_itms = inducer_items()
-        elif block_num in (2, 5, 7):
+        elif block_num in (2, 5):
             crrnt_phase = 'practice_strict'
             blck_itms = strict_practice_items()
             ddline = 10

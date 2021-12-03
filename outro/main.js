@@ -5,13 +5,11 @@ let subj_id, guilt, cit_order, block_order, probe_set, item_sets, item_cats, fil
 all_items = {
     1: {
         "banks": ["Phoenix Community Trust", "Citizen Union Finances", "Vertex Corporation Banks", "Goldward Credit Union", "Springwell Bank Group", "Elysium Holding Company"],
-        "forenames": ["Jenks", "Howe", "Snell", "Rand", "Falk", "Croft"],
-        "surnames": ["Phil", "Tim", "Ray", "Neil", "Gene", "Ralph"]
+        "names": ["Jenks", "Howe", "Snell", "Rand", "Falk", "Croft"]
     },
     2: {
         "banks": ["Elysium Holding Company", "Citadel Syndicate Group", "Zenith National Holdings", "Vanguard Savings Bank", "Bulwarks Credit Union", "Phoenix Community Trust"],
-        "forenames": ["Spence", "Bryant", "Platt", "Rusk", "Ames", "Dade"],
-        "surnames": ["Dale", "Wayne", "Glenn", "Walt", "Tod", "Earl"]
+        "names": ["Spence", "Bryant", "Platt", "Rusk", "Ames", "Dade"]
     }
 };
 
@@ -48,10 +46,10 @@ function subj_info() {
         }
         if (Math.floor(subj_num / 8) % 2 == 0) {
             block_order = 'banks_names';
-            item_cats = ['banks', 'forenames', 'surnames'];
+            item_cats = ['banks', 'names'];
         } else {
             block_order = 'names_banks';
-            item_cats = ['forenames', 'surnames', 'banks'];
+            item_cats = ['names', 'banks'];
         }
         if (subj_num <= 40) {
             probe_set = 1;
@@ -139,7 +137,7 @@ function submit() {
     let pfeed = '';
     pchosen = [];
     if (guilt == 'guilty') {
-        ['pch10', 'pch11', 'pch12', 'pch20', 'pch21', 'pch22'].forEach((prob) => {
+        ['pch10', 'pch11', 'pch20', 'pch21'].forEach((prob) => {
             let p_chk = document.querySelector('input[name="' + prob + '"]:checked');
             pchosen.push(p_chk ? p_chk.value : undefined);
         });
@@ -150,7 +148,7 @@ function submit() {
             theprob = all_probes[idx];
             if (seldprobe == theprob) {
                 pfeed += seldprobe + ' -> <b>correct (' + theprob + ')</b><br>';
-                if (idx < 3) {
+                if (idx < 2) {
                     pcount1 += 1;
                 } else {
                     pcount2 += 1;
@@ -167,8 +165,9 @@ function submit() {
         pcount2 = '';
     }
     document.getElementById('probsfeed').innerHTML = pfeed;
-    if (len < 6) {
-        alert('Please select an option in each of the 6 lists of items!');
+    if (len < 4) {
+        document.getElementById('outro_main').style.display = 'block';
+        alert('Please select an option in each of the 4 lists of items!');
     } else {
         window.scrollTo(0, 0);
         document.getElementById('outro_end').style.display = 'block';
@@ -188,7 +187,7 @@ let outro_data = '';
 
 function end_save() {
     show_check = document.getElementById('show_check').value;
-    if (guilt == 'innocent' || ['0', '1', '2', '3', '4', '5', '6'].includes(show_check)) {
+    if (guilt == 'innocent' || ['0', '1', '2', '3', '4'].includes(show_check)) {
         document.getElementById('outro_check_g').style.display = 'none';
         document.getElementById('outro_check_i').style.display = 'none';
         let gend_chk = document.querySelector('input[name="gender"]:checked');
@@ -206,8 +205,6 @@ function end_save() {
                 rats.push(document.getElementById(scl).value);
             }
         });
-
-
 
         outro_data += ['subject_id', 'guilt', 'cit_order', 'items_order', 'block_order', 'probe_set', 'age', 'gender', 'selected_probes', 'actual_probes', 'correct_selected1', 'correct_selected2', 'correct_noted', 'attention'].join('\t') + '\t' + scales.join('\t') + '\n' + [subj_id, guilt, cit_order, items_order, block_order, probe_set, age, gender, pchosen.join('|'), all_probes.join('|'), pcount1, pcount2, show_check, attcount].join('\t') + '\t' + rats.join('\t');
 
