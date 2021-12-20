@@ -276,9 +276,9 @@ def show_inf(instruction_text):
 
 def triggr():
     if stim_type == 'probe':
-        port.setData(2)
-    else:
         port.setData(1)
+    else:
+        port.setData(2)
     wait(trig_dur)
     port.setData(0)
 
