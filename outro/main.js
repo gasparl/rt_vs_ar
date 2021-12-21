@@ -16,8 +16,8 @@ all_items = {
 function subj_info() {
     subj_id = document.getElementById('subj_num').value;
     let subj_num = parseInt(subj_id) - 1;
-    let type_ans = 'polygraph based';
-    let type_rt = 'response time based';
+    let type_ans = 'ポリグラフ検査';
+    let type_rt = '反応時間測定をベースとした';
     if (subj_id != '' && subj_num > -1 && subj_num <= 200) {
         if (Math.floor(subj_num) % 2 == 0) {
             guilt = 'guilty';
@@ -167,7 +167,7 @@ function submit() {
     document.getElementById('probsfeed').innerHTML = pfeed;
     if (len < 4) {
         document.getElementById('outro_main').style.display = 'block';
-        alert('Please select an option in each of the 4 lists of items!');
+        alert('4つの項目リストから好きな項目を1つ選択してください。');
     } else {
         window.scrollTo(0, 0);
         document.getElementById('outro_end').style.display = 'block';
@@ -272,6 +272,6 @@ function attchecks() {
     document.getElementById("attcheck_id").classList.remove("slider_hide_thumb");
     attcount++;
     if (attcount > 2) {
-        document.getElementById('attdiv').innerHTML = "<br><b>Good! Thanks for paying attention! You can continue.</b><br><br>";
+        document.getElementById('attdiv').innerHTML = "<br><b>ありがとうございます。回答を続けてください。</b><br><br>";
     }
 }
