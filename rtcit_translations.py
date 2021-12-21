@@ -1,6 +1,6 @@
 # this files contains all instructions and filler words used in the CIT
 
-lg = 'en'
+lg = 'jp'
 
 lgs = {
     'en': 'English',
@@ -12,49 +12,49 @@ lgs = {
 targetref_words_orig = {
     'en': ['FAMILIAR', 'MINE', 'RECOGNIZED'], # these words are not to be translated literally one by one. The translations should always try to find the simplest, clearest words that relate to relevance, familiarity, recognition, importance. (The English 'MINE' is actually not the best, but it's good to also have a shorter word and this fits there.)
     'de': ['VERTRAUT', 'MEIN', 'RELEVANT'],
-    'jp': '日本語'
+    'jp': ['????', '???', '????']
 }
 
 # nontarget-side default fillers
 nontargref_words_orig = {
     'en': ['FOREIGN', 'IRRELEVANT', 'OTHER', 'RANDOM', 'THEIRS', 'UNFAMILIAR'], # these should have the meaning opposite of    relevance, familiarity, importance
     'de': ['IRRELEVANT', 'FREMD', 'UNBEKANNT', 'ANDERE', 'SONSTIGES', 'UNVERTRAUT'],
-    'jp': '日本語'
+    'jp': ['999', '8888', '77', '6666', '55', '444']
 }
 
 move_on = {
     'en': '\n\nPress Space to move on.',
     'de': 'Start',
-    'jp': '日本語'
+    'jp': '\n\nスペースキーを押して次に進んでください。'
 }
 
 show_inst = {
     'en': ' If needed, press Enter to read the full instructions again.',
     'de': '...',
-    'jp': '日本語'
+    'jp': '必要であれば、Enterキーを押すと全ての教示を読み直せます。'
 }
 
 taptostart = {
     'en': 'Press space to start.',
     'de': '...',
-    'jp': '日本語'
+    'jp': 'スペースキーを押して課題を始めてください。'
 }
 
 feedtooslo = {
     'en': 'Too slow!',
     'de': 'Zu langsam!',
-    'jp': '日本語'
+    'jp': '反応が遅すぎます！'
 }
 feedwrong = {
     'en': 'Wrong!',
     'de': 'Falsch!',
-    'jp': '日本語'
+    'jp': '間違い！'
 }
 
 acc_feed1 = {
     'en': 'You will have to repeat this practice round due to a wrong response (or too much waiting).',
     'de': 'Sie müssen die Übungsrunde wegen einer falschen (oder zu langsamen) Antwort wiederholen.',
-    'jp': '日本語'
+    'jp': '間違った反応(あるいは回答までの時間が長すぎる)のため、この練習試行をやり直します。'
 }
 
 acc_feed2 = {
@@ -65,16 +65,16 @@ acc_feed2 = {
         },
     'de': '...',
     'jp': {
-        'targs': '日本語',
-        'nontargs': '日本語',
-        'allits': '日本語'
+        'targs': '右のキー("I")に分類されるべき項目への正答数が少ないためこの練習試行をやり直します。これらの項目に注意してください。',
+        'nontargs': '左のキー("E")に分類されるべき項目への正答数が少ないためこの練習試行をやり直します。これらの項目に注意してください。',
+        'allits': '全ての項目に対する正答数が少ないためこの練習試行をやり直します。'
         }
 }
 
 completed = {
     'en': 'Test completed. Please inform the experiment leader.',
     'de': '...',
-    'jp': '日本語'
+    'jp': 'これで実験を終了します。実験者に声をかけてください。'
 }
 
 targs = 'TARGETS_PLACEHOLDER1'
@@ -113,15 +113,16 @@ blck_texts = {
     'de': '...',
     'jp': [
         # block 1
-        '',
+        'これから始まる課題では、さまざまな項目が画面中央に提示されます。各項目は一度に1つずつ画面に提示されます。この課題では、それぞれの項目を正しく分類することが求められます。項目の分類は、左のキー("E")あるいは右のキー("I")を押して行ってください。実験の本試行を開始する前に、3回の短い練習試行が設けられています。\n\n 1回目の練習試行では、2種類の項目を分類することが求められます。\n\n 架空犯罪の親近性に関する項目が提示された場合には右のキー("I")を:' + trefs + 
+        '。\nそれ以外の項目が提示された場合には左のキー("E")を押してください。それ以外の項目は: ' + nontrefs + '\n\n。各項目に対する反応には制限時間があります。従って、各項目にはできるだけ速く、そして正確に反応してください。この練習試行では、2種類の両項目に対して、制限時間内に最低でも正答率80%を達成しなければなりません。正答率がこの基準を下回った場合、練習試行をやり直す必要があります。',
         # block 2
-        '',
+        '2回目の練習試行では、主要テスト項目を分類することが求められます。この練習試行の主な目的は、あなたが主要なテスト項目の一つ(架空犯罪の詳細)を理解できているかどうかを確かめることです。\n\n 以下にある"ターゲット"項目(特に注意を払うべき項目)を見た場合には右のキー("I")を押してください:' + targs + '。\nそれ以外の項目が提示された場合には左のキー("E")を押してください。それ以外の項目は:' + nontrefs + '。\n\nこの練習試行では、各項目について選択をする機会がたくさんありますが、各項目に対して正確に反応する必要があります。誤反応(あるいは10秒以上反応をしなかった場合)、この練習試行をやり直す必要があります。',
         # block 3
-        '',
+        '3回目の練習試行では(これが最後の練習ラウンドになります)、全ての項目が提示されます。\n\nこの練習試行でも、できるだけ速く反応することが求められますが、数回程度であれば間違えても問題はありません。課題自体は全く同じです。以下の項目を見た場合には右のキー("I")を押してください:' + targs + cmma + trefs + '。他の項目を見た場合には左のキー("E")を押してください。',
         # block 4
-        '',
+        'ここから、本試行が始まります。課題自体は全く同じです。以下の項目を見た場合には右のキー("I")を押してください:' + targs + cmma + trefs + '。他の項目を見た場合には左のキー("E")を押してください。',
         # block 5
-        '',
+        'この課題では、主要な単語が異なります。以下にある"ターゲット"項目(特に注意を払うべき項目)を見た場合には右のキー("I")を押してください:' + targs + '。以下にある項目が提示された場合には左のキー("E")を押してください' + nontrefs + '。\n\nあなたがこの課題を正確に理解しているかどうかを確かめるために、短い練習試行を設けてあります。この練習試行では、各項目に正確に反応することが求められます。誤答があった場合、この練習試行をやり直す必要があります。',
         # block 6
-        '']
+         '次のブロックが始まります。課題自体は全く同じです。以下の項目を見た場合には右のキー("I")を押してください:' + targs + cmma + trefs + '。他の項目を見た場合には左のキー("E")を押してください。']
 }
