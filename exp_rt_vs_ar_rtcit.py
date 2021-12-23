@@ -448,7 +448,7 @@ def create_file():
     data_out = open(f_name, 'a', encoding='utf-8')
     data_out.write( '\t'.join( [ "subject_id", "phase", "block_number", "trial_number", 
     "stimulus_shown", "category", "stim_type", "response_key", "rt_start", "incorrect", 
-    "too_slow", "press_duration", "isi", "date_in_ms" ] ) + "\n" )
+    "too_slow", "press_duration", "isi", "date_in_s" ] ) + "\n" )
     print("File created:", f_name)
 
 def str_if_num( num_val ):

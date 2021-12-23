@@ -12,7 +12,7 @@ lgs = {
 targetref_words_orig = {
     'en': ['FAMILIAR', 'MINE', 'RECOGNIZED'], # these words are not to be translated literally one by one. The translations should always try to find the simplest, clearest words that relate to relevance, familiarity, recognition, importance. (The English 'MINE' is actually not the best, but it's good to also have a shorter word and this fits there.)
     'de': ['VERTRAUT', 'MEIN', 'RELEVANT'],
-    'jp': ['????', '???', '????']
+    'jp': ['関連', '公認', '身近な']
 }
 
 # nontarget-side default fillers

@@ -24,15 +24,15 @@ port = ParallelPort()
 # basics
 # =============================================================================
 
-display_dur = 25
-isi_delay = 0.5
+display_dur = 5
+isi_delay = 20
+init_delay = 5
 trig_dur = 0.1
 instruction_color = '#9999FF'
 instr_wait = 0.3
 
 block_infos = ['You will be repeatedly shown the following items one by one: PLACEHOLDER. Say "no" whenever you see a new item. Press space to move on.',
-            'You will now be shown the following items: PLACEHOLDER. Again, say "no" whenever you see a new item. Press space to move on.',
-            'You will now be shown the following items: PLACEHOLDER. Again, say "no" whenever you see a new item. Press space to move on.' ]
+            'You will now be shown the following items: PLACEHOLDER. Again, say "no" whenever you see a new item. Press space to move on.']
 pause_text = 'You can rest a little. Press space when you are ready to move on.'
 
 
@@ -56,13 +56,13 @@ else:
 
 all_items = {
     1: {
-        "banks": ["Phoenix Community Trust", "Citizen Union Finances", "Vertex Corporation Banks", 
+        "banks": ["Probe Phoenix Community Trust", "Citizen Union Finances", "Vertex Corporation Banks", 
         "Goldward Credit Union", "Springwell Bank Group", "Elysium Holding Company"],
-        "names": ["Jenks", "Howe", "Snell", "Rand", "Falk", "Croft"]
+        "names": ["Probe Jenks", "Howe", "Snell", "Rand", "Falk", "Croft"]
     },
     2: {
-        "banks": ["Elysium Holding Company", "Citadel Syndicate Group", "Zenith National Holdings", "Vanguard Savings Bank", "Bulwarks Credit Union", "Phoenix Community Trust"],
-        "names": ["Spence", "Bryant", "Platt", "Rusk", "Ames", "Dade"]
+        "banks": ["PROBE Holding Company", "Citadel Syndicate Group", "Zenith National Holdings", "Vanguard Savings Bank", "Bulwarks Credit Union", "Phoenix Community Trust"],
+        "names": ["PROBE Spence", "Bryant", "Platt", "Rusk", "Ames", "Dade"]
     }}
 
 
@@ -229,7 +229,7 @@ def create_file():
     f_name = 'exp_rt_vs_ar_arcit_' + subj_id + start_date.strftime("_%Y%m%d_%H%M") + '.txt'
     data_out = open(f_name, 'a', encoding='utf-8')
     data_out.write( '\t'.join( [ "subject_id", "block_number", "trial_number", 
-    "stimulus_shown", "category", "stim_type",  "date_in_ms" ] ) + "\n" )
+    "stimulus_shown", "category", "stim_type",  "date_in_s" ] ) + "\n" )
     print("File created:", f_name)
 
 
@@ -248,6 +248,8 @@ def run_blocks():
         blck_itms = block_items()
         print('BLOCK', block_num)
         print("len(blck_itms):", len(blck_itms))
+        fix_disp()
+        wait(init_delay)
         for trial_num in range(len(blck_itms)): # go through all stimuli of current block
             print("------- Trial number:", trial_num, "In block:", block_num)
             stim_current = blck_itms[trial_num]
@@ -258,14 +260,20 @@ def run_blocks():
             win.callOnFlip(triggr)  
             win.flip()
             wait(display_dur - trig_dur) # diplay word
-            win.flip()
+            fix_disp()
             add_resp()
             wait(isi_delay) # wait ISI
-            if (trial_num+1) % 5 == 0:
+            if (trial_num + 1) % 5 == 0 and trial_num < len(blck_itms):
                 data_out.write( 'PAUSE\n' )
                 show_inf(pause_text)
                 win.flip()
-                wait(isi_delay)
+                fix_disp()
+                wait(init_delay)
+
+def fix_disp:
+    center_disp.text = '+'
+    center_disp.draw()
+    win.flip()
 
 def show_inf(instruction_text):
     instruction_page.setText(instruction_text)
