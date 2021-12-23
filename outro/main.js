@@ -112,7 +112,7 @@ function create_stim_base() {
             words_lists[num1][num2] = words_lists[num1][num2].sort(function(a, b) {
                 return a.localeCompare(b);
             });
-            words_lists[num1][num2].push("I don't know.");
+            words_lists[num1][num2].push("わからない");
         });
     });
     words_lists.forEach((wbase, ind1) => {
