@@ -270,7 +270,7 @@ def run_blocks():
                 fix_disp()
                 wait(init_delay)
 
-def fix_disp:
+def fix_disp():
     center_disp.text = '+'
     center_disp.draw()
     win.flip()
