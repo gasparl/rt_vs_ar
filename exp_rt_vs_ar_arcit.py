@@ -31,9 +31,10 @@ trig_dur = 0.1
 instruction_color = '#9999FF'
 instr_wait = 0.3
 
-block_infos = ['You will be repeatedly shown the following items one by one: PLACEHOLDER. Say "no" whenever you see a new item. Press space to move on.',
-            'You will now be shown the following items: PLACEHOLDER. Again, say "no" whenever you see a new item. Press space to move on.']
-pause_text = 'You can rest a little. Press space when you are ready to move on.'
+block_infos = ['ポリグラフ検査を行います。検査では，以下の5つの項目が1つずつ，20～30秒間隔で提示されます。いずれか一つが，今回盗まれた個人情報です。\nPLACEHOLDER\n\n項目が提示されたら，事件への関与を否定するために，「いいえ」と口頭で返答してください。\n5つの項目がすべて提示されたら，短い休憩をとります。\nこれを，項目の提示順を変えて5回くり返します。
+スペースキーを押して検査をはじめてください。',
+            '次の検査では，以下の5つの項目が1つずつ，20～30秒間隔で提示されます。いずれか一つが，今回盗まれた個人情報です。\nPLACEHOLDER\n\n項目が提示されたら，事件への関与を否定するために，「いいえ」と口頭で返答してください。\n5つの項目がすべて提示されたら，短い休憩をとります。\nこれを，項目の提示順を変えて5回くり返します。\nスペースキーを押して検査をはじめてください。']
+pause_text = '短い休憩をとります。\n準備ができたらスペースキーを押して開始してください。'
 
 
 # =============================================================================
