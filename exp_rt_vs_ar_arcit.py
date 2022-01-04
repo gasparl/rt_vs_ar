@@ -57,13 +57,40 @@ else:
 
 all_items = {
     1: {
-        "banks": ["Probe Phoenix Community Trust", "Citizen Union Finances", "Vertex Corporation Banks", 
-        "Goldward Credit Union", "Springwell Bank Group", "Elysium Holding Company"],
-        "names": ["Probe Jenks", "Howe", "Snell", "Rand", "Falk", "Croft"]
+        "banks": [
+            'Springwell Bank Group',
+            'Phoenix Community Trust',
+            'Citizen Union Finances',
+            'Vertex Corporation Banks',
+            'Goldward Credit Union',
+            'Bastion Holding Company'
+        ],
+        "names": [
+            'Sakurai Chikage',
+            'Noguchi Natsuki',
+            'Taniguchi Yuki',
+            'Iwasaki Mirai',
+            'Nomura Hinata',
+            'Kinoshita Rion'
+        ]
     },
     2: {
-        "banks": ["PROBE Holding Company", "Citadel Syndicate Group", "Zenith National Holdings", "Vanguard Savings Bank", "Bulwarks Credit Union", "Phoenix Community Trust"],
-        "names": ["PROBE Spence", "Bryant", "Platt", "Rusk", "Ames", "Dade"]
+        "banks": [
+            'Amesbury National Bank',
+            'Elysium Holding Company',
+            'Zenith National Holdings',
+            'Bulwarks Credit Union',
+            'Vanguard Savings Bank',
+            'Meridian Syndicate Group'
+        ],
+        "names": [
+            'Arai Tsukasa',
+            'Takeda Yori',
+            'Chiba Kaoru',
+            'Sano Shinobu',
+            'Ueno Ritsu',
+            'Matsui Makoto'
+        ]
     }}
 
 
