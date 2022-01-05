@@ -144,11 +144,11 @@ def ending():
         mean_diff = 'NA'
     data_out.write("session_info\t" +
                    "/".join( ['duration','mean_diff', 'python_v', 'psypy_v',
-                              'guilt', 'cit_order', 'items_order', 'block_order',
+                              'guilt', 'cit_order', 'set_order', 'block_order',
                               'probe_set']) + '\t' + 
                    "/".join( [ str(nmbr) for nmbr in 
                               [full_duration, mean_diff, python_version(),
-                               __version__, guilt, cit_order, items_order, 
+                               __version__, guilt, cit_order, set_order, 
                                block_order, probe_set]]) + "\n")
     data_out.close()
     rtcit_eval = ('Correct probes: ' + str(probs_corr) + ' (' +
@@ -196,7 +196,7 @@ def start_input():
         quit()
 
 def set_conds(prep_tab = False):    
-    global item_cats, probe_set, cit_order, items_order, block_order, guilt
+    global item_cats, probe_set, cit_order, set_order, block_order, guilt
     subj_num = int(subj_id) - 1
     if not (subj_id != '' and subj_num > -1 and subj_num <= 200):
         print('subject number must be between 1 and 200')
@@ -214,10 +214,10 @@ def set_conds(prep_tab = False):
         rt_item_set = 2
         ans_item_set = 1
     if ((subj_num // 4) % 2 == 0):
-        items_order = '1_2'
+        set_order = '1_2'
         item_sets = [1, 2]
     else:
-        items_order = '2_1'
+        set_order = '2_1'
         item_sets = [2, 1]   
     if ((subj_num // 8) % 2 == 0):
         block_order = 'banks_names'
@@ -225,13 +225,13 @@ def set_conds(prep_tab = False):
     else:
         block_order = 'names_banks'
         item_cats = ['names', 'banks']    
-    if (subj_num <= 40):
+    if (subj_num < 40):
         probe_set = 1
-    elif (subj_num <= 80):
+    elif (subj_num < 80):
         probe_set = 2
-    elif (subj_num <= 120):
+    elif (subj_num < 120):
         probe_set = 3
-    elif (subj_num <= 160):
+    elif (subj_num < 160):
         probe_set = 4
     else:
         probe_set = 5
@@ -239,7 +239,7 @@ def set_conds(prep_tab = False):
     ans_probes = create_item_base( all_items[item_sets[rt_item_set-1]],
                                   all_items[item_sets[ans_item_set-1]])
     subj_info = '\n-- '.join(['ID: ' + subj_id, guilt[0], cit_order, 
-                              items_order, block_order, 'p' + str(probe_set)])
+                              set_order, block_order, 'p' + str(probe_set)])
     print(subj_info)
     
     if prep_tab == False:
@@ -251,14 +251,14 @@ def set_conds(prep_tab = False):
             print('cancelled...')
             quit()
     else:
-        return('\n' + '\t'.join([subj_id, guilt, cit_order, items_order, 
+        return('\n' + '\t'.join([subj_id, guilt, cit_order, set_order, 
                                  block_order, 'p' + str(probe_set), 
                                  '; '.join(task_probes), '; '.join(ans_probes)]))
 
 def prep_table(): # to create participants' spreadsheet
     global subj_id
     table_out = '\t'.join(['subj_id', 'guilt', 'cit_order',
-                           'items_order', 'block_order', 'probe_set', 
+                           'set_order', 'block_order', 'probe_set', 
                            'probes_rt', 'probes_ans'])
     for sid in range(200):
         subj_id = str(sid+1)

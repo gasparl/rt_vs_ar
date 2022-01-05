@@ -79,15 +79,15 @@ function subj_info() {
             block_order = 'names_banks';
             item_cats = ['names', 'banks'];
         }
-        if (subj_num <= 40) {
+        if (subj_num < 40) {
             probe_set = 1;
-        } else if (subj_num <= 80) {
+        } else if (subj_num < 80) {
             probe_set = 2;
-        } else if (subj_num <= 120) {
+        } else if (subj_num < 120) {
             probe_set = 3;
-        } else if (subj_num <= 160) {
+        } else if (subj_num < 160) {
             probe_set = 4;
-        } else if (subj_num <= 200) {
+        } else if (subj_num < 200) {
             probe_set = 5;
         } else {
             alert('subject number must be between 1 and 200');

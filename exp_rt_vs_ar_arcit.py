@@ -129,10 +129,10 @@ def execute():
 
     data_out.write("session_info\t" +
                    "/".join( ['python_v', 'psypy_v', 'guilt', 'cit_order', 
-                              'items_order', 'block_order', 'probe_set']) + '\t' + 
+                              'set_order', 'block_order', 'probe_set']) + '\t' + 
                    "/".join( [ str(nmbr) for nmbr in 
                               [python_version(), __version__, guilt, cit_order,
-                               items_order, block_order, probe_set]]) + "\n")
+                               set_order, block_order, probe_set]]) + "\n")
     data_out.close()    
     show_inf( 'Test completed' )
     kb.waitKeys(keyList = ['b'])
@@ -165,9 +165,9 @@ def start_input():
         quit()
 
 def set_conds(prep_tab = False):    
-    global item_cats, probe_set, cit_order, items_order, block_order, guilt
+    global item_cats, probe_set, cit_order, set_order, block_order, guilt
     subj_num = int(subj_id) - 1
-    if not (subj_id != '' and subj_num > -1 and subj_num <= 200):
+    if not (subj_id != '' and subj_num > -1 and subj_num < 200):
         print('subject number must be between 1 and 200')
         quit()
     if ((subj_num) % 2 == 0):
@@ -181,10 +181,10 @@ def set_conds(prep_tab = False):
         cit_order = 'ANS_RT'
         ans_item_set = 1
     if ((subj_num // 4) % 2 == 0):
-        items_order = '1_2'
+        set_order = '1_2'
         item_sets = [1, 2]
     else:
-        items_order = '2_1'
+        set_order = '2_1'
         item_sets = [2, 1]   
     if ((subj_num // 8) % 2 == 0):
         block_order = 'banks_names'
@@ -192,20 +192,20 @@ def set_conds(prep_tab = False):
     else:
         block_order = 'names_banks'
         item_cats = ['names', 'banks']    
-    if (subj_num <= 40):
+    if (subj_num < 40):
         probe_set = 1
-    elif (subj_num <= 80):
+    elif (subj_num < 80):
         probe_set = 2
-    elif (subj_num <= 120):
+    elif (subj_num < 120):
         probe_set = 3
-    elif (subj_num <= 160):
+    elif (subj_num < 160):
         probe_set = 4
     else:
         probe_set = 5
     # select the one set from the two
     create_item_base(all_items[item_sets[ans_item_set-1]])
     subj_info = '\n-- '.join(['ID: ' + subj_id, guilt[0], cit_order, 
-                              items_order, block_order, 'p' + str(probe_set)])
+                              set_order, block_order, 'p' + str(probe_set)])
     print(subj_info)
     confirm_box = Dlg(title='Confirmation', labelButtonOK='ALL CORRECT', 
                       labelButtonCancel='No, cancel')
