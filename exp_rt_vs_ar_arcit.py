@@ -30,10 +30,10 @@ init_delay = 5
 trig_dur = 0.1
 instruction_color = '#9999FF'
 instr_wait = 0.3
+fullscreen = True
 
-block_infos = ['ポリグラフ検査を行います。検査では，以下の5つの項目が1つずつ，20～30秒間隔で提示されます。いずれか一つが，今回盗まれた個人情報です。\nPLACEHOLDER\n\n項目が提示されたら，事件への関与を否定するために，「いいえ」と口頭で返答してください。\n5つの項目がすべて提示されたら，短い休憩をとります。\nこれを，項目の提示順を変えて5回くり返します。
-スペースキーを押して検査をはじめてください。',
-            '次の検査では，以下の5つの項目が1つずつ，20～30秒間隔で提示されます。いずれか一つが，今回盗まれた個人情報です。\nPLACEHOLDER\n\n項目が提示されたら，事件への関与を否定するために，「いいえ」と口頭で返答してください。\n5つの項目がすべて提示されたら，短い休憩をとります。\nこれを，項目の提示順を変えて5回くり返します。\nスペースキーを押して検査をはじめてください。']
+block_infos = ['ポリグラフ検査を行います。\n検査では，以下の5つの項目が1つずつ，20～30秒間隔で提示されます。\nいずれか一つが，今回盗まれた個人情報です。\nPLACEHOLDER\n\n項目が提示されたら，事件への関与を否定するために，「いいえ」と口頭で返答してください。\n5つの項目がすべて提示されたら，短い休憩をとります。\nこれを，項目の提示順を変えて5回くり返します。\nスペースキーを押して検査をはじめてください。',
+            '次の検査では，以下の5つの項目が1つずつ，20～30秒間隔で提示されます。\nいずれか一つが，今回盗まれた個人情報です。\nPLACEHOLDER\n\n項目が提示されたら，事件への関与を否定するために，「いいえ」と口頭で返答してください。\n5つの項目がすべて提示されたら，短い休憩をとります。\nこれを，項目の提示順を変えて5回くり返します。\nスペースキーを押して検査をはじめてください。']
 pause_text = '短い休憩をとります。\n準備ができたらスペースキーを押して開始してください。'
 
 
@@ -47,9 +47,9 @@ if testing:
     fullscreen = False
     instr_wait = 0.1
     test_trial_num = 10
-    display_dur = 2
-else:
-    fullscreen = True
+    display_dur = 1
+    isi_delay = 2
+    init_delay = 0.5
 
 # =============================================================================
 # MAIN ITEMS
@@ -98,7 +98,7 @@ block_num = 0
 
 def escaper():
     win.flip()
-    end_quest = TextStim(win, wrapWidth = 1200, height = 40, pos = [0,300],
+    end_quest = TextStim(win, wrapWidth = 800, height = 40, pos = [0,300],
                                 font='Verdana', color = 'red')
     end_quest.text = ('Sure you want to quit?\nPress Y to quit, or press the spacebar to continue.')
     end_quest.draw()
@@ -134,7 +134,7 @@ def execute():
                               [python_version(), __version__, guilt, cit_order,
                                set_order, block_order, probe_set]]) + "\n")
     data_out.close()    
-    show_inf( 'Test completed' )
+    show_inf( 'これで実験を終了します。\n実験者に声をかけてください。' )
     kb.waitKeys(keyList = ['b'])
     quit()
 
@@ -144,10 +144,10 @@ def set_screen(): # screen properties
                  screen = 1, units = 'pix', allowGUI = False) # 1280 1024    
     start_text = TextStim(win, color=instruction_color, font='Verdana', 
                           text = 'Press Space to start.', pos = [0,-300], 
-                          height=35, bold = True, wrapWidth= 1100)
+                          height=35, bold = True, wrapWidth= 800)
     center_disp = TextStim(win, color='white', font='Arial', 
-                           text = '', height = 45, wrapWidth = 1200)
-    instruction_page = TextStim(win, wrapWidth = 1200, height = 28, alignText = 'left',
+                           text = '', height = 45, wrapWidth = 800)
+    instruction_page = TextStim(win, wrapWidth = 1000, height = 28, alignText = 'left',
                                 font='Verdana', color = instruction_color)
     kb = keyboard.Keyboard()
 
@@ -291,7 +291,7 @@ def run_blocks():
             fix_disp()
             add_resp()
             wait(isi_delay) # wait ISI
-            if (trial_num + 1) % 5 == 0 and trial_num < len(blck_itms):
+            if (trial_num + 1) % 5 == 0 and (trial_num + 1) < len(blck_itms):
                 data_out.write( 'PAUSE\n' )
                 show_inf(pause_text)
                 win.flip()
