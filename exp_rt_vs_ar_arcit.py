@@ -70,7 +70,7 @@ all_items = {
             'Noguchi Natsuki',
             'Taniguchi Yuki',
             'Iwasaki Mirai',
-            'Nomura Hinata',
+            'Uchida Hinata',
             'Kinoshita Rion'
         ]
     },
@@ -139,12 +139,9 @@ def execute():
     quit()
 
 def set_screen(): # screen properties
-    global win, start_text, center_disp, instruction_page, kb    
+    global win, center_disp, instruction_page, kb    
     win = Window([1280, 1000], color='Black', fullscr = fullscreen,
                  screen = 1, units = 'pix', allowGUI = False) # 1280 1024    
-    start_text = TextStim(win, color=instruction_color, font='Verdana', 
-                          text = 'Press Space to start.', pos = [0,-300], 
-                          height=35, bold = True, wrapWidth= 800)
     center_disp = TextStim(win, color='white', font='Arial', 
                            text = '', height = 45, wrapWidth = 800)
     instruction_page = TextStim(win, wrapWidth = 1000, height = 28, alignText = 'left',

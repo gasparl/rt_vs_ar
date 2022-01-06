@@ -17,7 +17,7 @@ all_items = {
             'Noguchi Natsuki',
             'Taniguchi Yuki',
             'Iwasaki Mirai',
-            'Nomura Hinata',
+            'Uchida Hinata',
             'Kinoshita Rion'
         ]
     },

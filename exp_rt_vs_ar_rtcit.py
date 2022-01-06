@@ -70,7 +70,7 @@ all_items = {
             'Noguchi Natsuki',
             'Taniguchi Yuki',
             'Iwasaki Mirai',
-            'Nomura Hinata',
+            'Uchida Hinata',
             'Kinoshita Rion'
         ]
     },
@@ -140,6 +140,8 @@ def ending():
     conts_corr = len(all_main_rts['control'])
     if probs_corr > 5 and conts_corr > 5:
         mean_diff = (mean(all_main_rts['probe']) - mean(all_main_rts['control']))
+        print('probe RT: ', mean(all_main_rts['probe']))
+        print('control RT: ', mean(all_main_rts['control']))
     else:
         mean_diff = 'NA'
     data_out.write("session_info\t" +
@@ -169,7 +171,7 @@ def set_screen(): # screen properties
     win = Window([1280, 1000], color='Black', fullscr = fullscreen,
                  screen = 1, units = 'pix', allowGUI = False) # 1280 1024    
     start_text = TextStim(win, color=instruction_color, font='Verdana', 
-                          text = 'Press Space to start.', pos = [0,-300], 
+                          text = tr.tostart[tr.lg], pos = [0,-300], 
                           height=35, bold = True, wrapWidth= 1100)
     left_label = TextStim(win, color='white', font='Verdana', 
                           text = '', pos = [-350,-160], height=35, alignText='center')
@@ -675,7 +677,7 @@ def collect_rts(): # for practice evaluation & dcit calculation
         all_main_rts[ stim_type ].append(rt)
 
 def show_false():
-    center_disp.text = 'Wrong!'
+    center_disp.text = tr.feedwrong[tr.lg]
     center_disp.color = '#ff1111'
     center_disp.draw()
     draw_labels()
@@ -683,7 +685,7 @@ def show_false():
     wait(feed_time)
     center_disp.color = 'white'
 def show_tooslow():
-    center_disp.text = 'Too slow!'
+    center_disp.text = tr.feedtooslo[tr.lg]
     center_disp.color = '#ff1111'
     center_disp.draw()
     draw_labels()
