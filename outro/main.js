@@ -107,7 +107,7 @@ function subj_info() {
 }
 
 function start() {
-    filename_to_dl = 'rt_vs_ar_' + subj_id + '_' + neat_date() + '.txt';
+    filename_to_dl = 'exp_rt_vs_ar_qa_' + subj_id + '_' + neat_date() + '.txt';
     if (guilt == 'innocent') {
         let els = document.getElementsByClassName('g_only');
         for (var i = 0; i < els.length; i++) {
