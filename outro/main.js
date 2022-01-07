@@ -273,7 +273,7 @@ function copy_to_clip() {
 
 function neat_date() {
     let m = new Date();
-    return m.getFullYear() + "_" +
+    return m.getFullYear() + "" +
         ("0" + (m.getMonth() + 1)).slice(-2) + "" +
         ("0" + m.getDate()).slice(-2) + "_" +
         ("0" + m.getHours()).slice(-2) + "" +
