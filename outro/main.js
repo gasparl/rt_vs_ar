@@ -66,10 +66,10 @@ function subj_info() {
             document.getElementById('cit22').textContent = type_rt;
         }
         if (Math.floor(subj_num / 4) % 2 == 0) {
-            items_order = '1_2';
+            set_order = '1_2';
             item_sets = [1, 2];
         } else {
-            items_order = '2_1';
+            set_order = '2_1';
             item_sets = [2, 1];
         }
         if (Math.floor(subj_num / 8) % 2 == 0) {
@@ -96,7 +96,7 @@ function subj_info() {
         document.getElementById('subj_num_re').textContent = subj_id;
         document.getElementById('guilt').textContent = guilt[0];
         document.getElementById('cit_order').textContent = cit_order;
-        document.getElementById('items_order').textContent = items_order;
+        document.getElementById('set_order').textContent = set_order;
         document.getElementById('block_order').textContent = block_order;
         document.getElementById('probe_set').textContent = probe_set;
         document.getElementById('start_btn').style.display = 'block';
@@ -234,7 +234,7 @@ function end_save() {
             }
         });
 
-        outro_data += ['subject_id', 'guilt', 'cit_order', 'items_order', 'block_order', 'probe_set', 'age', 'gender', 'selected_probes', 'actual_probes', 'correct_selected1', 'correct_selected2', 'correct_noted', 'attention'].join('\t') + '\t' + scales.join('\t') + '\n' + [subj_id, guilt, cit_order, items_order, block_order, probe_set, age, gender, pchosen.join('|'), all_probes.join('|'), pcount1, pcount2, show_check, attcount].join('\t') + '\t' + rats.join('\t') + '\n';
+        outro_data += ['subject_id', 'guilt', 'cit_order', 'set_order', 'block_order', 'probe_set', 'age', 'gender', 'selected_probes', 'actual_probes', 'correct_selected1', 'correct_selected2', 'correct_noted', 'attention'].join('\t') + '\t' + scales.join('\t') + '\n' + [subj_id, guilt, cit_order, set_order, block_order, probe_set, age, gender, pchosen.join('|'), all_probes.join('|'), pcount1, pcount2, show_check, attcount].join('\t') + '\t' + rats.join('\t') + '\n';
 
         console.log(outro_data);
         document.getElementById('data_display').innerHTML = filename_to_dl + "\n" + outro_data + '\n\n\n<button onclick="dl_as_file();"> try saving again </button>\n\n\n<button onclick="copy_to_clip();"> copy to clipboard </button>';
