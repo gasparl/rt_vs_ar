@@ -234,7 +234,7 @@ function end_save() {
             }
         });
 
-        outro_data += ['subject_id', 'guilt', 'cit_order', 'items_order', 'block_order', 'probe_set', 'age', 'gender', 'selected_probes', 'actual_probes', 'correct_selected1', 'correct_selected2', 'correct_noted', 'attention'].join('\t') + '\t' + scales.join('\t') + '\n' + [subj_id, guilt, cit_order, items_order, block_order, probe_set, age, gender, pchosen.join('|'), all_probes.join('|'), pcount1, pcount2, show_check, attcount].join('\t') + '\t' + rats.join('\t');
+        outro_data += ['subject_id', 'guilt', 'cit_order', 'items_order', 'block_order', 'probe_set', 'age', 'gender', 'selected_probes', 'actual_probes', 'correct_selected1', 'correct_selected2', 'correct_noted', 'attention'].join('\t') + '\t' + scales.join('\t') + '\n' + [subj_id, guilt, cit_order, items_order, block_order, probe_set, age, gender, pchosen.join('|'), all_probes.join('|'), pcount1, pcount2, show_check, attcount].join('\t') + '\t' + rats.join('\t') + '\n';
 
         console.log(outro_data);
         document.getElementById('data_display').innerHTML = filename_to_dl + "\n" + outro_data + '\n\n\n<button onclick="dl_as_file();"> try saving again </button>\n\n\n<button onclick="copy_to_clip();"> copy to clipboard </button>';
