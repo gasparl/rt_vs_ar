@@ -139,7 +139,7 @@ def ending():
     probs_corr = len(all_main_rts['probe'])
     conts_corr = len(all_main_rts['control'])
     if probs_corr > 5 and conts_corr > 5:
-        mean_diff = (mean(all_main_rts['probe']) - mean(all_main_rts['control']))
+        mean_diff = str(round((mean(all_main_rts['probe']) - mean(all_main_rts['control']))*1000, 1))
         print('probe RT: ', mean(all_main_rts['probe']))
         print('control RT: ', mean(all_main_rts['control']))
     else:
@@ -157,7 +157,7 @@ def ending():
                   str(round(probs_corr/36*100, 1)) + '%)' +
                   '\nCorrect controls: ' + str(conts_corr) + ' (' +
                   str(round(conts_corr/144*100, 1)) + '%)' +
-                  '\nMean diff (smaller than 20?): ' + str(round(mean_diff, 1)))
+                  '\nMean diff (smaller than 20?): ' + mean_diff)
     show_instruction( tr.completed[tr.lg] )
     
     kb.waitKeys(keyList = ['b']) # press B to end the exp (prevents subject from closing window)
@@ -259,7 +259,7 @@ def set_conds(prep_tab = False):
 
 def prep_table(): # to create participants' spreadsheet
     global subj_id
-    table_out = '\t'.join(['subj_id', 'guilt', 'cit_order',
+    table_out = '\t'.join(['subject_id', 'guilt', 'cit_order',
                            'set_order', 'block_order', 'probe_set', 
                            'probes_rt', 'probes_ans'])
     for sid in range(200):
@@ -300,9 +300,9 @@ def create_item_base(words_base, words_other):
     targetrefs = []
     nontargrefs = []
     for ref_word in targetref_words:
-        targetrefs.append({'word': ref_word, 'item_type': 'targetref', 'categ': 'inducer' })
+        targetrefs.append({'word': ref_word, 'item_type': 'targetref', 'categ': 'filler' })
     for ref_word in nontargref_words:
-        nontargrefs.append({'word': ref_word, 'item_type': 'nontargref', 'categ': 'inducer' })
+        nontargrefs.append({'word': ref_word, 'item_type': 'nontargref', 'categ': 'filler' })
     return(ans_probes)
 
 def main_items():
