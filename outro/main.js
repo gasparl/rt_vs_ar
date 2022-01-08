@@ -185,7 +185,7 @@ function submit() {
                 pfeed += '<span style="color:red">' + seldprobe + ' -> <b>INCORRECT (' + theprob + ')</b></span><br>';
             }
         });
-        pfeed += '<br>Correct count: ' + pcount1 + ' (first test) and ' + pcount2 + ' (second test) out of all 6.';
+        pfeed += '<br>Correct count: ' + pcount1 + ' (first test) and ' + pcount2 + ' (second test) out of all 4.';
     } else {
         pfeed = "(Not guilty.)";
         all_probes = [];
@@ -215,12 +215,13 @@ let outro_data = '';
 
 function end_save() {
     show_check = document.getElementById('show_check').value;
-    if (guilt == 'innocent' || ['0', '1', '2', '3', '4'].includes(show_check)) {
+    if (guilt == 'innocent' || ['y', 'n'].includes(show_check)) {
         document.getElementById('outro_check_g').style.display = 'none';
         document.getElementById('outro_check_i').style.display = 'none';
         let gend_chk = document.querySelector('input[name="gender"]:checked');
         let gender = gend_chk ? gend_chk.value : 'NA';
         let age = document.getElementById('age').value;
+        let ncomment = document.getElementById('ncomment').value;
 
         let scales = ['realism', 'anxiety', 'excitement',
             'detected1', 'detected2', 'accuracy1', 'accuracy2'
@@ -234,7 +235,7 @@ function end_save() {
             }
         });
 
-        outro_data += ['subject_id', 'guilt', 'cit_order', 'set_order', 'block_order', 'probe_set', 'age', 'gender', 'selected_probes', 'actual_probes', 'correct_selected1', 'correct_selected2', 'correct_noted', 'attention'].join('\t') + '\t' + scales.join('\t') + '\n' + [subj_id, guilt, cit_order, set_order, block_order, probe_set, age, gender, pchosen.join('|'), all_probes.join('|'), pcount1, pcount2, show_check, attcount].join('\t') + '\t' + rats.join('\t') + '\n';
+        outro_data += ['subject_id', 'guilt', 'cit_order', 'set_order', 'block_order', 'probe_set', 'age', 'gender', 'selected_probes', 'actual_probes', 'correct_selected1', 'correct_selected2', 'attention', 'corrects_noted', 'comment'].join('\t') + '\t' + scales.join('\t') + '\n' + [subj_id, guilt, cit_order, set_order, block_order, probe_set, age, gender, pchosen.join('|'), all_probes.join('|'), pcount1, pcount2, attcount, show_check, ncomment].join('\t') + '\t' + rats.join('\t') + '\n';
 
         console.log(outro_data);
         document.getElementById('data_display').innerHTML = filename_to_dl + "\n" + outro_data + '\n\n\n<button onclick="dl_as_file();"> try saving again </button>\n\n\n<button onclick="copy_to_clip();"> copy to clipboard </button>';
@@ -283,11 +284,27 @@ function neat_date() {
 
 //only allow number in input field
 function validate(evt) {
-    var theEvent = evt || window.event;
-    var key = theEvent.keyCode || theEvent.which;
+    let theEvent = evt || window.event;
+    let key = theEvent.keyCode || theEvent.which;
     key = String.fromCharCode(key);
-    var regex = /[0-9]/;
+    let regex = /[0-9]/;
     if (!regex.test(key)) {
+        theEvent.returnValue = false;
+        if (theEvent.preventDefault) theEvent.preventDefault();
+    }
+}
+
+function yesno(evt) {
+    let theEvent = evt || window.event;
+    let key = theEvent.keyCode || theEvent.which;
+    key = String.fromCharCode(key);
+    if (key == 'n') {
+        document.getElementById('savebutt').style.display = 'none';
+        document.getElementById('explain').style.display = 'block';
+    } else if (key == 'y') {
+        document.getElementById('explain').style.display = 'none';
+        document.getElementById('savebutt').style.display = 'block';
+    } else {
         theEvent.returnValue = false;
         if (theEvent.preventDefault) theEvent.preventDefault();
     }

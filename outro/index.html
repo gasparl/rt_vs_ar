@@ -15,7 +15,7 @@
 
     <div id="outro_start" class='general'>
         <h1>Subject number</h1>
-        <input type="text" onkeypress='validate(event)' id="subj_num" class="form_start" maxlength="3" size="5">
+        <input type="text" onkeypress='validate(event)' id="subj_num" maxlength="3" size="5">
         <br>
         <hr>
         <br><br>
@@ -25,7 +25,7 @@
         <br><br>
         CIT order: <span class="bold" id='cit_order'>...</span>
         <br><br>
-        Set order: <span class="bold" id='items_order'>...</span>
+        Set order: <span class="bold" id='set_order'>...</span>
         <br><br>
         Block order: <span class="bold" id='block_order'>...</span>
         <br><br>
@@ -276,14 +276,27 @@
         </div>
         <br>
         <br>
-        Did the participant show the saved details? <b>If no, write "0", and exclude the participant.</b> If yes, write how many out of the 4 details were correct (1-4). (Minor typos or such do not matter.) If not all are correct, exclude the participant. Relevant notes can be added to the online
-        spreadsheet.
+        Did the participant show all four correctly saved details? (Minor typos or such do not matter.)
+        <br>
+        Write "y" for "yes", "n" for "no".
         <br>
         <br>
-        <input type="text" onkeypress='validate(event)' style="font-size:1.6vw" id="show_check" class="form_start" maxlength="1" size="3">
+        <input type="text" onkeypress='yesno(event)' style="font-size:1.6vw" id="show_check" maxlength="1" size="3">
+        <br>
+        <div style="display:none;" id="explain">
+            <br>
+            You selected that the participant did not note and show all four details correctly. Please explain the reason (in the text box below): for example, the participant did not make any notes at all, or otherwise how many out of the 4
+            details were correct (1-4).
+            <br>
+            <input type="text" id="ncomment" onkeypress="document.getElementById('savebutt').style.display = 'block';" size="50">
+            <br>
+            <br>
+            <b>If the notes were not shown, and the selections (above) are not correct either, the participant has to be excluded. (In that case, adjust the online spreadsheet!)</b>
+        </div>
         <br>
         <br>
-        <button onclick="end_save();"> SAVE DATA </button>
+        <br>
+        <button id="savebutt" style="display:none;" onclick="end_save();"> SAVE DATA </button>
     </div>
 
 
