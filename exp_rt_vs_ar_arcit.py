@@ -119,7 +119,7 @@ def execute():
     # now initiate stuff
     set_screen() # creates psychopy screen and stim objects
     # window opens
-    show_inf('START')
+    do_checks()
     create_file() # create output file
     win.mouseVisible = False
 
@@ -160,6 +160,33 @@ def start_input():
         set_conds()
     else:
         quit()
+
+
+def do_checks():
+    show_inf('Check measures: (1) skin conductance [...], (2) respiration [...], (3) heart rate [...], (4) pulse volume [...].\nIf all good, start trigger checks: 2 probes, then 2 irrelevants.')
+    port.setData(1)
+    wait(trig_dur)
+    port.setData(0)
+    wait(0.5)
+    port.setData(1)
+    wait(trig_dur)
+    port.setData(0)
+    wait(0.5)
+    port.setData(2)
+    wait(trig_dur)
+    port.setData(0)
+    wait(0.5)
+    port.setData(2)
+    wait(trig_dur)
+    port.setData(0)
+    wait(0.5)    
+    instruction_page.setText('Tiggers correct?')
+    instruction_page.draw()
+    win.flip()
+    wait(instr_wait)
+    if kb.waitKeys()[0] != 'y':
+        escaper()
+        do_checks()        
 
 def set_conds(prep_tab = False):    
     global item_cats, probe_set, cit_order, set_order, block_order, guilt
