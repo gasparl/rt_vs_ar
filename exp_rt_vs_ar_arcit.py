@@ -11,6 +11,8 @@ from psychopy.core import wait, quit
 from psychopy.event import globalKeys
 from psychopy.hardware import keyboard
 from psychopy.gui import Dlg
+from psychopy.sound import Sound
+import psychtoolbox as ptb
 from codecs import open
 from random import shuffle
 from copy import deepcopy
@@ -121,10 +123,12 @@ all_items_dict = {
     '松井 望' : 'Matsui_Nozomi'
 }
 
+aud_paths = ['audio_m/', 'audio_f/']
 for ky in all_items_dict:
     all_items_dict[ky] = all_items_dict[ky] + '.wav'
-    if not isfile('audio_f/' + all_items_dict[ky]):
-        raise Exception("File not found!: " + all_items_dict[ky])
+    for pth in aud_paths:
+        if not isfile(pth + all_items_dict[ky]):
+            raise Exception("File not found!: " + all_items_dict[ky])
 
 block_num = 0
 
@@ -171,13 +175,14 @@ def execute():
     quit()
 
 def set_screen(): # screen properties
-    global win, center_disp, instruction_page, kb
+    global win, center_disp, instruction_page, kb, cit_audio
     win = Window([1280, 1000], color='Black', fullscr = fullscreen,
                  screen = 1, units = 'pix', allowGUI = False) # 1280 1024
     center_disp = TextStim(win, color='white', font='Arial',
                            text = '', height = 45, wrapWidth = 800)
     instruction_page = TextStim(win, wrapWidth = 1000, height = 28, alignText = 'left',
                                 font='Verdana', color = instruction_color)
+    cit_audio = Sound('A')
     kb = keyboard.Keyboard()
 
 def start_input():
@@ -221,7 +226,7 @@ def do_checks():
         do_checks()
 
 def set_conds(prep_tab = False):
-    global item_cats, probe_set, cit_order, set_order, block_order, guilt
+    global item_cats, probe_set, cit_order, set_order, block_order, guilt, a_path
     subj_num = int(subj_id) - 1
     if not (subj_id != '' and subj_num > -1 and subj_num < 200):
         print('subject number must be between 1 and 200')
@@ -243,9 +248,11 @@ def set_conds(prep_tab = False):
         set_order = '2_1'
         item_sets = [2, 1]
     if ((subj_num // 8) % 2 == 0):
+        a_path = aud_paths[1]
         block_order = 'banks_names'
         item_cats = ['banks', 'names']
     else:
+        a_path = aud_paths[2]
         block_order = 'names_banks'
         item_cats = ['names', 'banks']
     if (subj_num < 40):
@@ -339,7 +346,11 @@ def run_blocks():
             stim_current = blck_itms[trial_num]
             stim_type = stim_current["item_type"]
             stim_text = stim_current["word"]
+            cit_audio.value = a_path + all_items_dict[stim_text]
             center_disp.text = stim_text
+            win.flip()
+            nextFlip = win.getFutureFlipTime(clock='ptb')
+            cit_audio.play(when=nextFlip)
             center_disp.draw()
             win.callOnFlip(triggr)
             win.flip()
