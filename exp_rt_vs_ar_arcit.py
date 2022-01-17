@@ -15,6 +15,7 @@ from codecs import open
 from random import shuffle
 from copy import deepcopy
 from datetime import datetime
+from os.path import isfile
 from psychopy.parallel import ParallelPort
 from platform import python_version
 from psychopy import __version__
@@ -58,41 +59,72 @@ if testing:
 all_items = {
     1: {
         "banks": [
-            'Springwell Bank Group',
-            'Phoenix Community Trust',
-            'Citizen Union Finances',
-            'Vertex Corporation Banks',
-            'Goldward Credit Union',
-            'Bastion Holding Company'
+        'みずほ銀行', # (Mizuho Bank)
+        'りそな銀行', # (Risona Bank)
+        'スルガ銀行', # (Suruga Bank)
+        'セブン銀行', # (Seven Bank)
+        'イオン銀行', # (Aeon Bank)
+        'ソニー銀行' # (Sony Bank)
         ],
         "names": [
-            'Sakurai Chikage',
-            'Noguchi Natsuki',
-            'Taniguchi Yuki',
-            'Iwasaki Mirai',
-            'Uchida Hinata',
-            'Kinoshita Rion'
+        '桜井 優希', # (Sakurai Yuki)
+        '野口 夏樹', # (Noguchi Natsuki)
+        '谷口 千里', # (Taniguchi Chisato)
+        '岩崎 未来', # (Iwasaki Mirai)
+        '内田 日向', # (Uchida Hinata)
+        '木下 浩実' # (Kinoshita Hiromi)
         ]
     },
     2: {
         "banks": [
-            'Amesbury National Bank',
-            'Elysium Holding Company',
-            'Zenith National Holdings',
-            'Bulwarks Credit Union',
-            'Vanguard Savings Bank',
-            'Meridian Syndicate Group'
+        '横浜銀行', # (Bank of Yokohama)
+        '足利銀行', # (Ashikaga Bank)
+        '千葉銀行', # (Chiba Bank)
+        '筑波銀行', # (Tsukuba Bank)
+        '群馬銀行', # (Gunma Bank)
+        '常陽銀行' # (Joyo Bank)
         ],
         "names": [
-            'Arai Tsukasa',
-            'Takeda Yori',
-            'Chiba Kaoru',
-            'Sano Shinobu',
-            'Ueno Ritsu',
-            'Matsui Makoto'
+        '新井 純', # (Arai Jun)
+        '武田 司', # (Takeda Tsukasa)
+        '小田 薫', # (Oda Kaoru)
+        '佐野 忍', # (Sano Shinobu)
+        '上野 律', # (Ueno Ritsu)
+        '松井 望' # (Matsui Nozomi)
         ]
     }}
 
+all_items_dict = {
+    'みずほ銀行' : 'Mizuho_bank',
+    'りそな銀行' : 'Risona_bank',
+    'スルガ銀行' : 'Suruga_bank',
+    'セブン銀行' : 'Seven_bank',
+    'イオン銀行' : 'Aeon_bank',
+    'ソニー銀行' : 'Sony_bank',
+    '桜井 優希' : 'Sakurai_Yuki',
+    '野口 夏樹' : 'Noguchi_Natsuki',
+    '谷口 千里' : 'Taniguchi_Chisato',
+    '岩崎 未来' : 'Iwasaki_Mirai',
+    '内田 日向' : 'Uchida_Hinata',
+    '木下 浩実' : 'Kinoshita_Hiromi',
+    '横浜銀行' : 'Yokohama_bank',
+    '足利銀行' : 'Ashikaga_bank',
+    '千葉銀行' : 'Chiba_bank',
+    '筑波銀行' : 'Tsukuba_bank',
+    '群馬銀行' : 'Gunma_bank',
+    '常陽銀行' : 'Joyo_bank',
+    '新井 純' : 'Arai_Jun',
+    '武田 司' : 'Takeda_Tsukasa',
+    '小田 薫' : 'Oda_Kaoru',
+    '佐野 忍' : 'Sano_Shinobu',
+    '上野 律' : 'Ueno_Ritsu',
+    '松井 望' : 'Matsui_Nozomi'
+}
+
+for ky in all_items_dict:
+    all_items_dict[ky] = all_items_dict[ky] + '.wav'
+    if not isfile('audio_f/' + all_items_dict[ky]):
+        raise Exception("File not found!: " + all_items_dict[ky])
 
 block_num = 0
 
@@ -128,21 +160,21 @@ def execute():
     print("************** END OF EXPERIMENT **************")
 
     data_out.write("session_info\t" +
-                   "/".join( ['python_v', 'psypy_v', 'guilt', 'cit_order', 
-                              'set_order', 'block_order', 'probe_set']) + '\t' + 
-                   "/".join( [ str(nmbr) for nmbr in 
+                   "/".join( ['python_v', 'psypy_v', 'guilt', 'cit_order',
+                              'set_order', 'block_order', 'probe_set']) + '\t' +
+                   "/".join( [ str(nmbr) for nmbr in
                               [python_version(), __version__, guilt, cit_order,
                                set_order, block_order, probe_set]]) + "\n")
-    data_out.close()    
+    data_out.close()
     show_inf( 'これで実験を終了します。\n実験者に声をかけてください。' )
     kb.waitKeys(keyList = ['b'])
     quit()
 
 def set_screen(): # screen properties
-    global win, center_disp, instruction_page, kb    
+    global win, center_disp, instruction_page, kb
     win = Window([1280, 1000], color='Black', fullscr = fullscreen,
-                 screen = 1, units = 'pix', allowGUI = False) # 1280 1024    
-    center_disp = TextStim(win, color='white', font='Arial', 
+                 screen = 1, units = 'pix', allowGUI = False) # 1280 1024
+    center_disp = TextStim(win, color='white', font='Arial',
                            text = '', height = 45, wrapWidth = 800)
     instruction_page = TextStim(win, wrapWidth = 1000, height = 28, alignText = 'left',
                                 font='Verdana', color = instruction_color)
@@ -150,7 +182,7 @@ def set_screen(): # screen properties
 
 def start_input():
     global subj_id, categories
-    input_box = Dlg(title='Session information', 
+    input_box = Dlg(title='Session information',
                     labelButtonOK='OK', labelButtonCancel='Cancel')
     input_box.addField(label='Subject number', tip = 'number between 1 and 200')
     input_box.show()
@@ -179,16 +211,16 @@ def do_checks():
     port.setData(2)
     wait(trig_dur)
     port.setData(0)
-    wait(0.5)    
+    wait(0.5)
     instruction_page.setText('Tiggers correct?')
     instruction_page.draw()
     win.flip()
     wait(instr_wait)
     if kb.waitKeys()[0] != 'y':
         escaper()
-        do_checks()        
+        do_checks()
 
-def set_conds(prep_tab = False):    
+def set_conds(prep_tab = False):
     global item_cats, probe_set, cit_order, set_order, block_order, guilt
     subj_num = int(subj_id) - 1
     if not (subj_id != '' and subj_num > -1 and subj_num < 200):
@@ -197,7 +229,7 @@ def set_conds(prep_tab = False):
     if ((subj_num) % 2 == 0):
         guilt = 'guilty'
     else:
-        guilt = 'innocent'    
+        guilt = 'innocent'
     if ((subj_num // 2) % 2 == 0):
         cit_order = 'RT_ANS'
         ans_item_set = 2
@@ -209,13 +241,13 @@ def set_conds(prep_tab = False):
         item_sets = [1, 2]
     else:
         set_order = '2_1'
-        item_sets = [2, 1]   
+        item_sets = [2, 1]
     if ((subj_num // 8) % 2 == 0):
         block_order = 'banks_names'
         item_cats = ['banks', 'names']
     else:
         block_order = 'names_banks'
-        item_cats = ['names', 'banks']    
+        item_cats = ['names', 'banks']
     if (subj_num < 40):
         probe_set = 1
     elif (subj_num < 80):
@@ -228,10 +260,10 @@ def set_conds(prep_tab = False):
         probe_set = 5
     # select the one set from the two
     create_item_base(all_items[item_sets[ans_item_set-1]])
-    subj_info = '\n-- '.join(['ID: ' + subj_id, guilt[0], cit_order, 
+    subj_info = '\n-- '.join(['ID: ' + subj_id, guilt[0], cit_order,
                               set_order, block_order, 'p' + str(probe_set)])
     print(subj_info)
-    confirm_box = Dlg(title='Confirmation', labelButtonOK='ALL CORRECT', 
+    confirm_box = Dlg(title='Confirmation', labelButtonOK='ALL CORRECT',
                       labelButtonCancel='No, cancel')
     confirm_box.addText('Is the following information correct?\n' + subj_info)
     confirm_box.show()
@@ -276,18 +308,18 @@ def block_items():
 
 # create output file, begin writing, reset parameters
 def create_file():
-    global data_out, start_date 
+    global data_out, start_date
     start_date = datetime.now()
     f_name = 'exp_rt_vs_ar_arcit_' + subj_id + start_date.strftime("_%Y%m%d_%H%M") + '.txt'
     data_out = open(f_name, 'a', encoding='utf-8')
-    data_out.write( '\t'.join( [ "subject_id", "block_number", "trial_number", 
+    data_out.write( '\t'.join( [ "subject_id", "block_number", "trial_number",
     "stimulus_shown", "category", "stim_type",  "date_in_s" ] ) + "\n" )
     print("File created:", f_name)
 
 
 def add_resp():
     data_out.write( '\t'.join( [ subj_id, str(block_num), str(trial_num+1), stim_text,
-                                stim_current["categ"], stim_type, 
+                                stim_current["categ"], stim_type,
                                 datetime.now().strftime("%y%m%d_%H%M%S") ] ) + '\n' )
     print("Block:", block_num, "Trial:", trial_num, "Stim:", stim_text)
 
@@ -309,7 +341,7 @@ def run_blocks():
             stim_text = stim_current["word"]
             center_disp.text = stim_text
             center_disp.draw()
-            win.callOnFlip(triggr)  
+            win.callOnFlip(triggr)
             win.flip()
             wait(display_dur - trig_dur) # diplay word
             fix_disp()

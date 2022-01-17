@@ -58,38 +58,38 @@ nontargetkey = 'e'
 all_items = {
     1: {
         "banks": [
-            'Springwell Bank Group',
-            'Phoenix Community Trust',
-            'Citizen Union Finances',
-            'Vertex Corporation Banks',
-            'Goldward Credit Union',
-            'Bastion Holding Company'
+        'みずほ銀行', # (Mizuho Bank)
+        'りそな銀行', # (Risona Bank)
+        'スルガ銀行', # (Suruga Bank)
+        'セブン銀行', # (Seven Bank)
+        'イオン銀行', # (Aeon Bank)
+        'ソニー銀行' # (Sony Bank)
         ],
         "names": [
-            'Sakurai Chikage',
-            'Noguchi Natsuki',
-            'Taniguchi Yuki',
-            'Iwasaki Mirai',
-            'Uchida Hinata',
-            'Kinoshita Rion'
+        '桜井 優希', # (Sakurai Yuki)
+        '野口 夏樹', # (Noguchi Natsuki)
+        '谷口 千里', # (Taniguchi Chisato)
+        '岩崎 未来', # (Iwasaki Mirai)
+        '内田 日向', # (Uchida Hinata)
+        '木下 浩実' # (Kinoshita Hiromi)
         ]
     },
     2: {
         "banks": [
-            'Amesbury National Bank',
-            'Elysium Holding Company',
-            'Zenith National Holdings',
-            'Bulwarks Credit Union',
-            'Vanguard Savings Bank',
-            'Meridian Syndicate Group'
+        '横浜銀行', # (Bank of Yokohama)
+        '足利銀行', # (Ashikaga Bank)
+        '千葉銀行', # (Chiba Bank)
+        '筑波銀行', # (Tsukuba Bank)
+        '群馬銀行', # (Gunma Bank)
+        '常陽銀行' # (Joyo Bank)
         ],
         "names": [
-            'Arai Tsukasa',
-            'Takeda Yori',
-            'Chiba Kaoru',
-            'Sano Shinobu',
-            'Ueno Ritsu',
-            'Matsui Makoto'
+        '新井 純', # (Arai Jun)
+        '武田 司', # (Takeda Tsukasa)
+        '小田 薫', # (Oda Kaoru)
+        '佐野 忍', # (Sano Shinobu)
+        '上野 律', # (Ueno Ritsu)
+        '松井 望' # (Matsui Nozomi)
         ]
     }}
 
@@ -100,7 +100,7 @@ blck_texts = tr.blck_texts[tr.lg]
 block_num = 0
 all_main_rts = { 'probe' : [], 'control': [] }
 
-def escaper():    
+def escaper():
     win.flip()
     end_quest = TextStim(win, wrapWidth = 1200, height = 40, pos = [0,300],
                                 font='Verdana', color = 'red')
@@ -147,10 +147,10 @@ def ending():
     data_out.write("session_info\t" +
                    "/".join( ['duration','mean_diff', 'python_v', 'psypy_v',
                               'guilt', 'cit_order', 'set_order', 'block_order',
-                              'probe_set']) + '\t' + 
-                   "/".join( [ str(nmbr) for nmbr in 
+                              'probe_set']) + '\t' +
+                   "/".join( [ str(nmbr) for nmbr in
                               [full_duration, mean_diff, python_version(),
-                               __version__, guilt, cit_order, set_order, 
+                               __version__, guilt, cit_order, set_order,
                                block_order, probe_set]]) + "\n")
     data_out.close()
     rtcit_eval = ('Correct probes: ' + str(probs_corr) + ' (' +
@@ -159,7 +159,7 @@ def ending():
                   str(round(conts_corr/144*100, 1)) + '%)' +
                   '\nMean diff (smaller than 20?): ' + mean_diff)
     show_instruction( tr.completed[tr.lg] )
-    
+
     kb.waitKeys(keyList = ['b']) # press B to end the exp (prevents subject from closing window)
     print(rtcit_eval)
     show_instruction( rtcit_eval )
@@ -167,17 +167,17 @@ def ending():
 
 
 def set_screen(): # screen properties
-    global win, start_text, left_label, right_label, center_disp, instruction_page, kb    
+    global win, start_text, left_label, right_label, center_disp, instruction_page, kb
     win = Window([1280, 1000], color='Black', fullscr = fullscreen,
-                 screen = 1, units = 'pix', allowGUI = False) # 1280 1024    
-    start_text = TextStim(win, color=instruction_color, font='Verdana', 
-                          text = tr.tostart[tr.lg], pos = [0,-300], 
+                 screen = 1, units = 'pix', allowGUI = False) # 1280 1024
+    start_text = TextStim(win, color=instruction_color, font='Verdana',
+                          text = tr.tostart[tr.lg], pos = [0,-300],
                           height=35, bold = True, wrapWidth= 1100)
-    left_label = TextStim(win, color='white', font='Verdana', 
+    left_label = TextStim(win, color='white', font='Verdana',
                           text = '', pos = [-350,-160], height=35, alignText='center')
-    right_label = TextStim(win, color='white', font='Verdana', 
+    right_label = TextStim(win, color='white', font='Verdana',
                            text = '', pos = [350,-160], height=35, alignText='center')
-    center_disp = TextStim(win, color='white', font='Arial', 
+    center_disp = TextStim(win, color='white', font='Arial',
                            text = '', height = 45, wrapWidth = 1200)
     instruction_page = TextStim(win, wrapWidth = 1200, height = 28, alignText = 'left',
                                 font='Verdana', color = instruction_color)
@@ -186,7 +186,7 @@ def set_screen(): # screen properties
 
 def start_input():
     global subj_id, categories
-    input_box = Dlg(title='Session information', 
+    input_box = Dlg(title='Session information',
                     labelButtonOK='OK', labelButtonCancel='Cancel')
     input_box.addField(label='Subject number', tip = 'number between 1 and 200')
     input_box.show()
@@ -197,7 +197,7 @@ def start_input():
     else:
         quit()
 
-def set_conds(prep_tab = False):    
+def set_conds(prep_tab = False):
     global item_cats, probe_set, cit_order, set_order, block_order, guilt
     subj_num = int(subj_id) - 1
     if not (subj_id != '' and subj_num > -1 and subj_num <= 200):
@@ -206,13 +206,13 @@ def set_conds(prep_tab = False):
     if ((subj_num) % 2 == 0):
         guilt = 'guilty'
     else:
-        guilt = 'innocent'    
+        guilt = 'innocent'
     if ((subj_num // 2) % 2 == 0):
         cit_order = 'RT_ANS'
         rt_item_set = 1
         ans_item_set = 2
     else:
-        cit_order = 'ANS_RT' 
+        cit_order = 'ANS_RT'
         rt_item_set = 2
         ans_item_set = 1
     if ((subj_num // 4) % 2 == 0):
@@ -220,13 +220,13 @@ def set_conds(prep_tab = False):
         item_sets = [1, 2]
     else:
         set_order = '2_1'
-        item_sets = [2, 1]   
+        item_sets = [2, 1]
     if ((subj_num // 8) % 2 == 0):
         block_order = 'banks_names'
         item_cats = ['banks', 'names']
     else:
         block_order = 'names_banks'
-        item_cats = ['names', 'banks']    
+        item_cats = ['names', 'banks']
     if (subj_num < 40):
         probe_set = 1
     elif (subj_num < 80):
@@ -240,12 +240,12 @@ def set_conds(prep_tab = False):
     # select the one set from the two
     ans_probes = create_item_base( all_items[item_sets[rt_item_set-1]],
                                   all_items[item_sets[ans_item_set-1]])
-    subj_info = '\n-- '.join(['ID: ' + subj_id, guilt[0], cit_order, 
+    subj_info = '\n-- '.join(['ID: ' + subj_id, guilt[0], cit_order,
                               set_order, block_order, 'p' + str(probe_set)])
     print(subj_info)
-    
+
     if prep_tab == False:
-        confirm_box = Dlg(title='Confirmation', labelButtonOK='ALL CORRECT', 
+        confirm_box = Dlg(title='Confirmation', labelButtonOK='ALL CORRECT',
                           labelButtonCancel='No, cancel')
         confirm_box.addText('Is the following information correct?\n' + subj_info)
         confirm_box.show()
@@ -253,14 +253,14 @@ def set_conds(prep_tab = False):
             print('cancelled...')
             quit()
     else:
-        return('\n' + '\t'.join([subj_id, guilt, cit_order, set_order, 
-                                 block_order, 'p' + str(probe_set), 
+        return('\n' + '\t'.join([subj_id, guilt, cit_order, set_order,
+                                 block_order, 'p' + str(probe_set),
                                  '; '.join(task_probes), '; '.join(ans_probes)]))
 
 def prep_table(): # to create participants' spreadsheet
     global subj_id
     table_out = '\t'.join(['subject_id', 'guilt', 'cit_order',
-                           'set_order', 'block_order', 'probe_set', 
+                           'set_order', 'block_order', 'probe_set',
                            'probes_rt', 'probes_ans'])
     for sid in range(200):
         subj_id = str(sid+1)
@@ -448,7 +448,7 @@ def full_practice_items():
         good_indexes = [] # will collect the indexes where the dict item may be inserted
         dummy_dict = [{ 'word': '-', 'item_type': '-' }] # dummy dict to the end; if the item is to be inserted to the end, there is no following dict that could cause an unwanted repetition
         for f_index, f_item in enumerate(stim_dicts_f + dummy_dict): # check all potential indexes for insertion in the stim_dicts_f as it is so far (plus 1 place at the end)
-            if (dict_item['item_type'] not in ('probe', 'control') and 
+            if (dict_item['item_type'] not in ('probe', 'control') and
                     dict_item['item_type'] in diginto_dict(stim_dicts_f, f_index, 'item_type', 1)): # checks whether there is preceding or following identical item_type around the potential index (see diginto_dict function)
                 continue # if there is, continue without adding the index as good index
             good_indexes.append(f_index) # if did not continue above, do add as good index
@@ -471,12 +471,12 @@ def diginto_dict(dct, indx, key_name, min_dstnc):
 
 # create output file, begin writing, reset parameters
 def create_file():
-    global data_out, start_date 
+    global data_out, start_date
     start_date = datetime.now()
     f_name = 'exp_rt_vs_ar_rtcit_' + subj_id + start_date.strftime("_%Y%m%d_%H%M") + '.txt'
     data_out = open(f_name, 'a', encoding='utf-8')
-    data_out.write( '\t'.join( [ "subject_id", "phase", "block_number", "trial_number", 
-    "stimulus_shown", "category", "stim_type", "response_key", "rt_start", "incorrect", 
+    data_out.write( '\t'.join( [ "subject_id", "phase", "block_number", "trial_number",
+    "stimulus_shown", "category", "stim_type", "response_key", "rt_start", "incorrect",
     "too_slow", "press_duration", "isi", "date_in_s" ] ) + "\n" )
     print("File created:", f_name)
 
@@ -501,8 +501,8 @@ def replcs(text):
            tr.nontargs, comma.join(sorted(nontargw))))
 
 def add_resp():
-    data_out.write( '\t'.join( [ subj_id, crrnt_phase, str(block_num), str(trial_num+1), 
-    stim_text, stim_current["categ"], stim_type, resp_key, str_if_num(rt_start), str(incorrect), 
+    data_out.write( '\t'.join( [ subj_id, crrnt_phase, str(block_num), str(trial_num+1),
+    stim_text, stim_current["categ"], stim_type, resp_key, str_if_num(rt_start), str(incorrect),
     str(tooslow), str_if_num(press_dur), str_if_num( isi_min_max[0]/1000 + isi_delay ), datetime.now().strftime("%y%m%d_%H%M%S") ] ) + '\n' )
     print("resp key:", resp_key, "for stim:", stim_text, "incorrect:", incorrect, "rt_start:", rt_start)
 
@@ -672,7 +672,7 @@ def collect_rts(): # for practice evaluation & dcit calculation
     if group_type not in rt_data_dict:
         rt_data_dict[group_type] = []
     rt_data_dict[group_type].append(rt)
-    if (crrnt_phase == 'main' and stim_type in ("probe","control") and 
+    if (crrnt_phase == 'main' and stim_type in ("probe","control") and
         incorrect != 1 and tooslow != 1 and rt > 0.15 and rt < main_ddline):
         all_main_rts[ stim_type ].append(rt)
 
