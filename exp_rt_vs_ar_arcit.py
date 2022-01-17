@@ -200,7 +200,7 @@ def start_input():
 
 
 def do_checks():
-    show_inf('Check measures: (1) skin conductance [...], (2) respiration [...], (3) heart rate [...], (4) pulse volume [...].\nIf all good, start trigger checks: 2 probes, then 2 irrelevants.')
+    show_inf('Check measures: (1) skin conductance [SCR], (2) respiration [Resp], (3) heart rate ["Pulse"], (4) pulse volume ["ECG"].\n\nIf all good, start trigger checks: 2 probes, then 2 irrelevants.')
     port.setData(1)
     wait(trig_dur)
     port.setData(0)
@@ -217,7 +217,7 @@ def do_checks():
     wait(trig_dur)
     port.setData(0)
     wait(0.5)
-    instruction_page.setText('Tiggers correct?')
+    instruction_page.setText('Tiggers correct? (If yes, start recording!)')
     instruction_page.draw()
     win.flip()
     wait(instr_wait)
@@ -346,7 +346,7 @@ def run_blocks():
             stim_current = blck_itms[trial_num]
             stim_type = stim_current["item_type"]
             stim_text = stim_current["word"]
-            cit_audio.value = a_path + all_items_dict[stim_text]
+            cit_audio.setSound(a_path + all_items_dict[stim_text])
             center_disp.text = stim_text
             win.flip()
             nextFlip = win.getFutureFlipTime(clock='ptb')
