@@ -2,41 +2,42 @@
 
 let subj_id, guilt, cit_order, block_order, probe_set, item_sets, item_cats, filename_to_dl;
 
+
 all_items = {
     1: {
         "banks": [
-            'Springwell Bank Group',
-            'Phoenix Community Trust',
-            'Citizen Union Finances',
-            'Vertex Corporation Banks',
-            'Goldward Credit Union',
-            'Bastion Holding Company'
+            'みずほ銀行', // (Mizuho Bank)
+            'りそな銀行', // (Risona Bank)
+            'スルガ銀行', // (Suruga Bank)
+            'セブン銀行', // (Seven Bank)
+            'イオン銀行', // (Aeon Bank)
+            'ソニー銀行' // (Sony Bank)
         ],
         "names": [
-            'Sakurai Chikage',
-            'Noguchi Natsuki',
-            'Taniguchi Yuki',
-            'Iwasaki Mirai',
-            'Uchida Hinata',
-            'Kinoshita Rion'
+            '桜井 優希', // (Sakurai Yuki)
+            '野口 夏樹', // (Noguchi Natsuki)
+            '谷口 千里', // (Taniguchi Chisato)
+            '岩崎 未来', // (Iwasaki Mirai)
+            '内田 日向', // (Uchida Hinata)
+            '木下 浩実' // (Kinoshita Hiromi)
         ]
     },
     2: {
         "banks": [
-            'Amesbury National Bank',
-            'Elysium Holding Company',
-            'Zenith National Holdings',
-            'Bulwarks Credit Union',
-            'Vanguard Savings Bank',
-            'Meridian Syndicate Group'
+            '横浜銀行', // (Bank of Yokohama)
+            '足利銀行', // (Ashikaga Bank)
+            '千葉銀行', // (Chiba Bank)
+            '筑波銀行', // (Tsukuba Bank)
+            '群馬銀行', // (Gunma Bank)
+            '常陽銀行' // (Joyo Bank)
         ],
         "names": [
-            'Arai Tsukasa',
-            'Takeda Yori',
-            'Chiba Kaoru',
-            'Sano Shinobu',
-            'Ueno Ritsu',
-            'Matsui Makoto'
+            '新井 純', // (Arai Jun)
+            '武田 司', // (Takeda Tsukasa)
+            '小田 薫', // (Oda Kaoru)
+            '佐野 忍', // (Sano Shinobu)
+            '上野 律', // (Ueno Ritsu)
+            '松井 望' // (Matsui Nozomi)
         ]
     }
 };
