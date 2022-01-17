@@ -248,11 +248,11 @@ def set_conds(prep_tab = False):
         set_order = '2_1'
         item_sets = [2, 1]
     if ((subj_num // 8) % 2 == 0):
-        a_path = aud_paths[1]
+        a_path = aud_paths[0]
         block_order = 'banks_names'
         item_cats = ['banks', 'names']
     else:
-        a_path = aud_paths[2]
+        a_path = aud_paths[1]
         block_order = 'names_banks'
         item_cats = ['names', 'banks']
     if (subj_num < 40):
