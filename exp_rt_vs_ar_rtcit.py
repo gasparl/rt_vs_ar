@@ -46,7 +46,7 @@ else:
 
 main_ddline = 1 # sec
 isi_min_max = (500, 800)
-feed_time = 0.5
+feed_time = 0.1
 instruction_color = '#9999FF'
 targetkey = 'i'
 nontargetkey = 'e'

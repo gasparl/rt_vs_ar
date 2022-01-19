@@ -182,7 +182,7 @@ def set_screen(): # screen properties
                            text = '', height = 45, wrapWidth = 800)
     instruction_page = TextStim(win, wrapWidth = 1000, height = 28, alignText = 'left',
                                 font='Verdana', color = instruction_color)
-    cit_audio = Sound('A')
+    cit_audio = Sound('A', stereo = True)
     kb = keyboard.Keyboard()
 
 def start_input():
@@ -200,7 +200,7 @@ def start_input():
 
 
 def do_checks():
-    show_inf('Check measures: (1) skin conductance ["SCR"], (2) respiration ["Resp"], (3) heart rate ["Pulse"], (4) pulse volume ["ECG"].\n\nIf all good, start trigger checks: 2 probes, then 2 irrelevants.')
+    show_inf('Check measures: (1) skin conductance ["SCR", "SCL"], (2) respiration ["Resp"], (3) heart rate ["Pulse"], (4) pulse volume ["ECG"].\n\nIf all good, start trigger checks: 2 probes ["S1"], then 2 irrelevants ["S2"].')
     win.flip()
     port.setData(1)
     wait(trig_dur)
