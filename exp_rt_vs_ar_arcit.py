@@ -44,7 +44,7 @@ pause_text = '短い休憩をとります。\n準備ができたらスペース�
 # testing
 # =============================================================================
 
-testing = True # True for testing, False for real recording
+testing = False # True for testing, False for real recording
 
 if testing:
     fullscreen = False
