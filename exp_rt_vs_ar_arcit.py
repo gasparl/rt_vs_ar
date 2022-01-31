@@ -207,7 +207,6 @@ def do_checks():
     nextFlip = win.getFutureFlipTime(clock='ptb')
     cit_audio.play(when=nextFlip)
     center_disp.draw()
-    win.callOnFlip(triggr)
     win.flip()
     port.setData(1)
     wait(trig_dur)

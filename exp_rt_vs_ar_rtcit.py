@@ -620,7 +620,7 @@ def run_block():
         win.flip()
         kb.clearEvents()
         response = kb.waitKeys(maxWait = ddline, waitRelease = False,
-                               keyList=[targetkey, nontargetkey])
+                               keyList=[targetkey, nontargetkey], clear = False)
         if not response:
             rt_start = kb.clock.getTime()
             resp_key = 'NA'
