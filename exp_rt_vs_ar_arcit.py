@@ -200,7 +200,14 @@ def start_input():
 
 
 def do_checks():
-    show_inf('Check measures: (1) skin conductance ["SCR", "SCL"], (2) respiration ["Resp"], (3) heart rate ["Pulse"], (4) pulse volume ["ECG"].\n\nIf all good, start trigger checks: 2 probes ["S1"], then 2 irrelevants ["S2"].')
+    cit_audio.setSound('audio_test/test.wav')
+    show_inf('Check "SCR", "SCL", "Resp", "Pulse", "ECG".\n\nIf all good, start trigger checks (2x "S1" then 2x "S2") and sound test.')
+    center_disp.text = '...'
+    win.flip()
+    nextFlip = win.getFutureFlipTime(clock='ptb')
+    cit_audio.play(when=nextFlip)
+    center_disp.draw()
+    win.callOnFlip(triggr)
     win.flip()
     port.setData(1)
     wait(trig_dur)
@@ -218,7 +225,7 @@ def do_checks():
     wait(trig_dur)
     port.setData(0)
     wait(0.5)
-    instruction_page.setText('Tiggers correct? (If yes, start recording!)')
+    instruction_page.setText('Tiggers & sound correct?\n\nIf yes, start recording!')
     instruction_page.draw()
     win.flip()
     wait(instr_wait)
