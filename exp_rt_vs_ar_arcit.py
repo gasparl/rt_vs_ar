@@ -29,7 +29,7 @@ port = ParallelPort()
 
 display_dur = 5
 isi_delay = 20
-init_delay = 5
+init_delay = 8
 trig_dur = 0.1
 instruction_color = '#9999FF'
 instr_wait = 0.3
